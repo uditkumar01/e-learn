@@ -1,0 +1,67 @@
+<ul class="list-group list-group-flush">
+
+    {% if check_all == "true" %}
+        {% for user in all_users %}
+            <li class="list-group-item" style="min-width: 380px;">
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                        <h6 class="mb-0"><strong>{{user.username}}</strong></h6><span class="small" style="font-size: 12px;">{{user.user_type|title}}</span></div>
+                    <!-- <div class="col-auto">
+                        <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div> -->
+                        <!-- <span class="text-xs"></span>
+                    </div> -->
+                    
+                </div>
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2 mt-1">
+
+                        <img src="{{ url_for('static',filename='img/'+ user.profile_pic) }}" style="height: 16px; width: 16px; border-radius: 50%;">
+                        <span class="text-xs" style="font-size: 10px;"> From {{user.country|title}}</span>
+                        
+                    </div>
+                    <div class="col-auto">
+                        <span class="text-xs" style="font-size: 10px;">
+                            <a style="font-size: 12px; border: 1px solid; padding: 3px; border-radius: 2px; text-decoration: none;" href="{{url_for('users.account',username=user.username)}}">View Profile</a>
+                        </span>
+                    </div>
+                    
+                </div>
+                
+            </li>
+        {% endfor %}
+                                                
+            
+
+                {% for post in all_posts %}
+                    <li class="list-group-item">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col mr-2">
+                                <h6 class="mb-0"><strong>{{post.title|capitalize}}</strong></h6><span class="small" style="font-size: 12px;">{{(((post.content.split(' '))[:(20,post.content.split(' ')|length)|min])|join(' '))|capitalize}} ...</span></div>
+                            <!-- <div class="col-auto">
+                                <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div> -->
+                                <!-- <span class="text-xs"></span>
+                            </div> -->
+                            
+                        </div>
+                        <div class="row align-items-center no-gutters">
+                            <div class="col mr-2 mt-1">
+
+                                <img src="{{ url_for('static',filename='img/'+ post.author.profile_pic) }}" style="height: 16px; width: 16px; border-radius: 50%;">
+                                <span class="text-xs" style="font-size: 10px;">{{post.author.username|title}}</span>
+                                
+                            </div>
+                            <div class="col-auto">
+                                <span class="text-xs" style="font-size: 10px;">
+                                    <a style="font-size: 12px; border: 1px solid; padding: 3px; border-radius: 2px; text-decoration: none; padding-left: 5px; padding-right: 5px;" href="{{url_for('posts.post',post_id = post.id)}}">View Post</a>
+                                </span>
+                            </div>
+                            
+                        </div>
+                        
+                    </li>
+                {% endfor %}
+    {% else %}
+        No results
+    {% endif %}
+</ul>
+    

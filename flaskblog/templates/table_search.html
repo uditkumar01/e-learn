@@ -1,0 +1,18 @@
+{% if all_school_users %}
+    {% for user1 in all_school_users %}
+    <tr>
+        <td><img class="rounded-circle mr-2" width="30" height="30" src="{{url_for('static',filename='img/'+user1.profile_pic)}}">{{user1.username}}</td>
+        <td>{{user1.user_type|title}}</td>
+        <td>{{user1.country}}</td>
+        <td>{{user1.post_count}}</td>
+        <td>{{ user1.dob }}</td>
+        <td>{{ user1.email }}</td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr style="text-align: center; font-size: 20px;">
+
+    <td colspan="6"><br/>No Results</td>
+
+    </tr>
+{% endif %}

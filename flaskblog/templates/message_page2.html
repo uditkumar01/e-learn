@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Dashboard | E-Learn</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/fonts/fontawesome-all.min.css')}}">
+    <script src="https://use.typekit.net/hoy3lrg.js"></script>
+	<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+	<style class="cp-pen-styles">
+	body {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+		background: #fff;
+		font-family: "proxima-nova", "Source Sans Pro", sans-serif;
+		font-size: 1em;
+		letter-spacing: 0.1px;
+		color: #32465a;
+		text-rendering: optimizeLegibility;
+		text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+		-webkit-font-smoothing: antialiased;
+	  }
+	  
+	  #frame {
+		
+		width: 100vw;
+		height: 100vh;
+		
+		background: #E6EAEA;
+	  }
+	  @media screen and (max-width: 360px) {
+		#frame {
+		  width: 100%;
+		  height: 100vh;
+		}
+	  }
+	  #frame #sidepanel {
+		float: left;
+		min-width: 280px;
+		max-width: 340px;
+		width: 40%;
+		height: 100%;
+		background:  rgb(47, 89, 216);
+		color: #f5f5f5;
+		overflow: hidden;
+		position: relative;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel {
+		  width: 58px;
+		  min-width: 58px;
+		}
+	  }
+	  #frame #sidepanel #profile {
+		width: 80%;
+		margin: 25px auto;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile {
+		  width: 100%;
+		  margin: 0 auto;
+		  padding: 5px 0 0 0;
+		  background:rgb(59,97,209);
+		}
+	  }
+	  #frame #sidepanel #profile.expanded .wrap {
+		height: 210px;
+		line-height: initial;
+	  }
+	  #frame #sidepanel #profile.expanded .wrap p {
+		margin-top: 20px;
+	  }
+	  #frame #sidepanel #profile.expanded .wrap i.expand-button {
+		-moz-transform: scaleY(-1);
+		-o-transform: scaleY(-1);
+		-webkit-transform: scaleY(-1);
+		transform: scaleY(-1);
+		filter: FlipH;
+		-ms-filter: "FlipH";
+	  }
+	  #frame #sidepanel #profile .wrap {
+		height: 55px;
+		line-height: 60px;
+		overflow: hidden;
+		-moz-transition: 0.3s height ease;
+		-o-transition: 0.3s height ease;
+		-webkit-transition: 0.3s height ease;
+		transition: 0.3s height ease;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap {
+		  height: 65px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap img {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		padding: 2px;
+		margin-top: 4px;
+		border: 2px solid #e74c3c;
+		height: auto;
+		float: left;
+		cursor: pointer;
+		-moz-transition: 0.3s border ease;
+		-o-transition: 0.3s border ease;
+		-webkit-transition: 0.3s border ease;
+		transition: 0.3s border ease;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap img {
+		  width: 40px;
+		  height: 40px;
+		  margin-left: 8px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap img.online {
+		border: 2px solid #2ecc71;
+	  }
+	  #frame #sidepanel #profile .wrap img.away {
+		border: 2px solid #f1c40f;
+	  }
+	  #frame #sidepanel #profile .wrap img.busy {
+		border: 2px solid #e74c3c;
+	  }
+	  #frame #sidepanel #profile .wrap img.offline {
+		border: 2px solid #95a5a6;
+	  }
+	  #frame #sidepanel #profile .wrap p {
+		float: left;
+		margin-left: 15px;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap p {
+		  display: none;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap i.expand-button {
+		float: right;
+		margin-top: 23px;
+		font-size: 0.8em;
+		cursor: pointer;
+		color: rgb(95, 127, 223);
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap i.expand-button {
+		  display: none;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options {
+		position: absolute;
+		opacity: 0;
+		visibility: hidden;
+		width: 150px;
+		margin: 70px 0 0 0;
+		border-radius: 6px;
+		z-index: 99;
+		line-height: initial;
+		background: rgb(59,97,209);
+		-moz-transition: 0.3s all ease;
+		-o-transition: 0.3s all ease;
+		-webkit-transition: 0.3s all ease;
+		transition: 0.3s all ease;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options {
+		  width: 58px;
+		  margin-top: 57px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options.active {
+		opacity: 1;
+		visibility: visible;
+		margin: 75px 0 0 0;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options.active {
+		  margin-top: 62px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options:before {
+		content: '';
+		position: absolute;
+		width: 0;
+		height: 0;
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		border-bottom: 8px solid rgb(59,97,209);
+		margin: -8px 0 0 24px;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options:before {
+		  margin-left: 23px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul {
+		overflow: hidden;
+		border-radius: 6px;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li {
+		padding: 15px 0 30px 18px;
+		display: block;
+		cursor: pointer;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options ul li {
+		  padding: 15px 0 35px 22px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li:hover {
+		background:  rgb(47, 89, 216);
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li span.status-circle {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		margin: 5px 0 0 0;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options ul li span.status-circle {
+		  width: 14px;
+		  height: 14px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li span.status-circle:before {
+		content: '';
+		position: absolute;
+		width: 14px;
+		height: 14px;
+		margin: -3px 0 0 -3px;
+		background: transparent;
+		border-radius: 50%;
+		z-index: 0;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options ul li span.status-circle:before {
+		  height: 18px;
+		  width: 18px;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li p {
+		padding-left: 12px;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #profile .wrap #status-options ul li p {
+		  display: none;
+		}
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-online span.status-circle {
+		background: #2ecc71;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-online.active span.status-circle:before {
+		border: 1px solid #2ecc71;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-away span.status-circle {
+		background: #f1c40f;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-away.active span.status-circle:before {
+		border: 1px solid #f1c40f;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-busy span.status-circle {
+		background: #e74c3c;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-busy.active span.status-circle:before {
+		border: 1px solid #e74c3c;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-offline span.status-circle {
+		background: #95a5a6;
+	  }
+	  #frame #sidepanel #profile .wrap #status-options ul li#status-offline.active span.status-circle:before {
+		border: 1px solid #95a5a6;
+	  }
+	  #frame #sidepanel #profile .wrap #expanded {
+		padding: 100px 0 0 0;
+		display: block;
+		line-height: initial !important;
+	  }
+	  #frame #sidepanel #profile .wrap #expanded label {
+		float: left;
+		clear: both;
+		margin: 0 8px 5px 0;
+		padding: 5px 0;
+	  }
+	  #frame #sidepanel #profile .wrap #expanded input {
+		border: none;
+		margin-bottom: 6px;
+		background:rgb(59,97,209);
+		border-radius: 3px;
+		color: #f5f5f5;
+		padding: 7px;
+		width: calc(100% - 43px);
+	  }
+	  #frame #sidepanel #profile .wrap #expanded input:focus {
+		outline: none;
+		background: rgb(59,97,209);
+	  }
+	  #frame #sidepanel #search {
+		/* border-top: 1px solid rgb(59,97,209); */
+		/* border-bottom: 2px solid rgb(59,97,209); */
+		font-weight: 300;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #search {
+		  display: none;
+		}
+	  }
+	  #frame #sidepanel #search label {
+		position: absolute;
+		margin: 16px 0 0 20px;
+	  }
+	  #frame #sidepanel #search input {
+		font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
+		padding: 10px 0 10px 46px;
+		width: calc(100% - 12px);
+		border-radius: 0px;
+		margin: 5px;
+		background:rgb(70, 117, 255);
+		border-width: 0;
+		border-bottom: 2px solid rgb(169, 189, 248);
+		
+		color: #f5f5f5;
+	  }
+	  #frame #sidepanel #search input:focus {
+		outline: none;
+		background: rgb(96, 135, 253);
+	  }
+	  #frame #sidepanel #search input::-webkit-input-placeholder {
+		color: #f5f5f5;
+	  }
+	  #frame #sidepanel #search input::-moz-placeholder {
+		color: #f5f5f5;
+	  }
+	  #frame #sidepanel #search input:-ms-input-placeholder {
+		color: #f5f5f5;
+	  }
+	  #frame #sidepanel #search input:-moz-placeholder {
+		color: #f5f5f5;
+	  }
+	  #frame #sidepanel #contacts {
+		height: calc(100% - 192px);
+		overflow-y: scroll;
+		overflow-x: hidden;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #contacts {
+		  height: calc(100% - 149px);
+		  overflow-y: scroll;
+		  overflow-x: hidden;
+		}
+		#frame #sidepanel #contacts::-webkit-scrollbar {
+		  display: none;
+		}
+	  }
+	  #frame #sidepanel #contacts.expanded {
+		height: calc(100% - 334px);
+	  }
+	  #frame #sidepanel #contacts::-webkit-scrollbar {
+		width: 8px;
+		background:  rgb(47, 89, 216);
+	  }
+	  #frame #sidepanel #contacts::-webkit-scrollbar-thumb {
+		background-color:  rgb(47, 89, 216);
+	  }
+	  #frame #sidepanel #contacts ul li.contact {
+		position: relative;
+		padding: 10px 0 15px 0;
+		font-size: 0.9em;
+		cursor: pointer;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #contacts ul li.contact {
+		  padding: 6px 0 46px 8px;
+		}
+	  }
+	  #frame #sidepanel #contacts ul li.contact:hover {
+		background: rgb(70, 117, 255);
+	  }
+	  #frame #sidepanel #contacts ul li.contact.active {
+		background:rgb(70, 117, 255);
+		color: #fff;
+		border-right: 4px solid rgb(211, 209, 209);
+	  }
+	  
+	  #frame #sidepanel #contacts ul li.contact.active span.contact-status {
+		border: 2px solid rgb(59,97,209) !important;
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap {
+		width: 88%;
+		margin: 0 auto;
+		position: relative;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #contacts ul li.contact .wrap {
+		  width: 100%;
+		}
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap span {
+		position: absolute;
+		left: 0;
+		margin: -2px 0 0 -2px;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		border: 2px solid #2c3e50;
+		background: #95a5a6;
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap span.online {
+		background: #2ecc71;
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap span.away {
+		background: #f1c40f;
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap span.busy {
+		background: #e74c3c;
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap img {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		float: left;
+		margin-right: 10px;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #contacts ul li.contact .wrap img {
+		  margin-right: 0px;
+		}
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap .meta {
+		padding: 5px 0 0 0;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #contacts ul li.contact .wrap .meta {
+		  display: none;
+		}
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap .meta .name {
+		font-weight: 600;
+	  }
+	  #frame #sidepanel #contacts ul li.contact .wrap .meta .preview {
+		margin: 5px 0 0 0;
+		padding: 0 0 1px;
+		font-weight: 400;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-moz-transition: 1s all ease;
+		-o-transition: 1s all ease;
+		-webkit-transition: 1s all ease;
+		transition: 1s all ease;
+	  }
+	  
+	  #frame #sidepanel #contacts ul li.contact .wrap .meta .preview span {
+		position: initial;
+		border-radius: initial;
+		background: none;
+		border: none;
+		padding: 0 2px 0 0;
+		margin: 0 0 0 1px;
+		opacity: .5;
+	  }
+	  #frame #sidepanel #bottom-bar {
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+	  }
+	  #frame #sidepanel #bottom-bar button {
+		float: left;
+		border: none;
+		width: 50%;
+		padding: 10px 0;
+		background:rgb(59,97,209);
+		color: #f5f5f5;
+		cursor: pointer;
+		font-size: 15px;
+		font-family: "Source Sans Pro", sans-serif;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #bottom-bar button {
+		  float: none;
+		  width: 100%;
+		  padding: 15px 0;
+		}
+	  }
+	  #frame #sidepanel #bottom-bar button:focus {
+		outline: none;
+	  }
+	  #frame #sidepanel #bottom-bar button:nth-child(1) {
+		border-right: 1px solid #2c3e50;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #bottom-bar button:nth-child(1) {
+		  border-right: none;
+		  border-bottom: 1px solid  rgb(47, 89, 216);
+		}
+	  }
+	  #frame #sidepanel #bottom-bar button:hover {
+		background: rgb(59,97,209);
+	  }
+	  #frame #sidepanel #bottom-bar button i {
+		margin-right: 3px;
+		font-size: 18px;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #bottom-bar button i {
+		  font-size: 1.3em;
+		}
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame #sidepanel #bottom-bar button span {
+		  display: none;
+		}
+	  }
+	  #frame .content {
+		float: right;
+		width: 60%;
+		height: 100%;
+		overflow: hidden;
+		position: relative;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame .content {
+		  width: calc(100% - 58px);
+		  min-width: 300px !important;
+		}
+	  }
+	  @media screen and (min-width: 900px) {
+		#frame .content {
+		  width: calc(100% - 340px);
+		}
+	  }
+	  #frame .content .contact-profile {
+		width: 100%;
+		height: 65px;
+		line-height: 60px;
+		background: #f5f5f5;
+	  }
+	  #frame .content .contact-profile img {
+		height: 40px;
+		width: 40px;
+		border-radius: 50%;
+		float: left;
+		margin: 17px 12px 0 9px;
+	  }
+	  #frame .content .contact-profile p {
+		float: left;
+	  }
+	  #frame .content .contact-profile .social-media {
+		float: right;
+	  }
+	  #frame .content .contact-profile .social-media i {
+		margin-left: 14px;
+		cursor: pointer;
+	  }
+	  #frame .content .contact-profile .social-media i:nth-last-child(1) {
+		margin-right: 20px;
+	  }
+	  #frame .content .contact-profile .social-media i:hover {
+		color: rgb(59,97,209);
+	  }
+	  #frame .content .messages {
+		height: auto;
+		min-height: calc(100% - 120px);
+		max-height: calc(100% - 120px);
+		background: url("{{url_for('static',filename='img/chat_wallpapers/'+['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][(range(6)|random)])}}");
+		background-attachment:fixed;
+		background-repeat: no-repeat;
+		background-size: cover;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame .content .messages {
+		  max-height: calc(100% - 105px);
+		}
+	  }
+	  #frame .content .messages::-webkit-scrollbar {
+		width: 8px;
+		background: transparent;
+	  }
+	  #frame .content .messages::-webkit-scrollbar-thumb {
+		background-color: rgba(0, 0, 0, 0.3);
+	  }
+	  #frame .content .messages ul li {
+		display: inline-block;
+		clear: both;
+		float: left;
+		margin: 15px 15px 5px 15px;
+		width: calc(100% - 25px);
+		font-size: 0.9em;
+	  }
+	  #frame .content .messages ul li:nth-last-child(1) {
+		margin-bottom: 20px;
+	  }
+	  #frame .content .messages ul li.sent img {
+		margin: 6px 8px 0 0;
+	  }
+	  #frame .content .messages ul li.sent p {
+		background: rgb(59,97,209);
+		color: #f5f5f5;
+	  }
+	  #frame .content .messages ul li.replies img {
+		float: right;
+		margin: 6px 0 0 8px;
+	  }
+	  #frame .content .messages ul li.replies p {
+		background: #f5f5f5;
+		float: right;
+	  }
+	  #frame .content .messages ul li img {
+		height: 25px;
+		width: 25px;
+		border-radius: 50%;
+		float: left;
+	  }
+	  #frame .content .messages ul li p {
+		display: inline-block;
+		padding: 10px 15px;
+		border-radius: 5px;
+		max-width: 205px;
+		line-height: 130%;
+		min-width: 70px;
+	  }
+	  @media screen and (min-width: 735px) {
+		#frame .content .messages ul li p {
+		  max-width: 300px;
+		}
+	  }
+	  #frame .content .message-input {
+		position: absolute;
+		bottom: -10px;
+		width: 100%;
+		/* right: 10px; */
+		z-index: 99;
+	  }
+	  #frame .content .message-input .wrap {
+		position: relative;
+	  }
+	  #frame .content .message-input .wrap input {
+		font-family: "proxima-nova",  "Source Sans Pro", sans-serif;
+		float: left;
+		border: none;
+		width: calc(100% - 90px);
+		padding: 11px 32px 10px 8px;
+		font-size: 0.8em;
+		color: #32465a;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame .content .message-input .wrap input {
+		  padding: 15px 32px 16px 8px;
+		}
+	  }
+	  #frame .content .message-input .wrap input:focus {
+		outline: none;
+	  }
+	  #frame .content .message-input .wrap .attachment {
+		position: absolute;
+		right: 60px;
+		z-index: 4;
+		margin-top: 10px;
+		font-size: 1.1em;
+		color: rgb(59,97,209);
+		opacity: .5;
+		cursor: pointer;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame .content .message-input .wrap .attachment {
+		  margin-top: 17px;
+		  right: 65px;
+		}
+	  }
+	  #frame .content .message-input .wrap .attachment:hover {
+		opacity: 1;
+	  }
+	  #frame .content .message-input .wrap button {
+		float: right;
+		border: none;
+		width: 50px;
+		padding: 12px 0;
+		cursor: pointer;
+		background:rgb(59,97,209);
+		color: #f5f5f5;
+	  }
+	  @media screen and (max-width: 735px) {
+		#frame .content .message-input .wrap button {
+		  padding: 16px 0;
+		}
+	  }
+	  #frame .content .message-input .wrap button:hover {
+		background: rgb(59,97,209);
+	  }
+	  #frame .content .message-input .wrap button:focus {
+		outline: none;
+	  }
+	  </style>
+	  <style>
+
+
+h1, h2 {
+    font-weight: 400;
+    margin: 0px 0px 5px 0px;
+}
+h1 {
+    font-size: 24px;
+}
+h2 {
+    font-size: 16px;
+}
+p {
+    margin: 0px;
+}
+.profile-card {
+	background: #FFB300;
+	width: 56px;
+	height: 56px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+    z-index: 2;
+	overflow: hidden;
+    opacity: 0;
+    margin-top: 70px;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	-webkit-border-radius: 50%;
+	border-radius: 50%;
+	-webkit-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+	box-shadow: 0px 3px 6px rgba(0 ,0, 0, 0.16), 0px 3px 6px rgba(0, 0, 0, 0.23);
+    -webkit-animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia_landscape 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+    animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia_landscape 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+}
+.profile-card header {
+    width: 179px;
+    height: 280px;
+    padding: 40px 20px 30px 20px;
+    display: inline-block;
+    float: left;
+    border-right: 2px dashed #EEEEEE;
+	background: #FFFFFF;
+    color: #000000;
+    margin-top: 50px;
+    opacity: 0;
+    text-align: center;
+    -webkit-animation: moveIn 1s 3.1s ease forwards;
+    animation: moveIn 1s 3.1s ease forwards;
+}
+.profile-card header h1 {
+    color: #FF5722;
+}
+.profile-card header a {
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    margin: 25px 30px;
+}
+.profile-card header a:after {
+	position: absolute;
+    content: "";
+	bottom: 3px;
+	right: 3px;
+	width: 20px;
+	height: 20px;
+    border: 4px solid #FFFFFF;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    background: -webkit-linear-gradient(top, #00dd30 0%, #00dd30 50%,#07ff6e 50%,#07ff6e 100%);
+    background: linear-gradient(#00dd30 0%, #00dd30 50%, #07ff6e 50%,#07ff6e 100%);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    -webkit-animation: scaleIn 0.3s 3.5s ease forwards;
+    animation: scaleIn 0.3s 3.5s ease forwards;
+}
+.profile-card header a > img {
+    width: 120px;
+	height: 120px;
+    max-width: 100%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transition: -webkit-box-shadow 0.3s ease;
+    transition: box-shadow 0.3s ease;
+    -webkit-box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 0.06);
+}
+.profile-card header a:hover > img {
+    -webkit-box-shadow: 0px 0px 0px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 0px 12px rgba(0, 0, 0, 0.1);
+}
+.profile-card .profile-bio {
+    width: 175px;        
+    height: 180px;
+    display: inline-block;
+    float: right;
+    padding: 50px 20px 30px 20px;
+	background: #FFFFFF;
+    color: #333333;
+    margin-top: 50px;
+    text-align: center;
+    opacity: 0;
+    -webkit-animation: moveIn 1s 3.1s ease forwards;
+    animation: moveIn 1s 3.1s ease forwards;
+}
+
+
+.profile-social-links li a:hover:before {
+    -webkit-animation: ripple 1s ease forwards;
+    animation: ripple 1s ease forwards;
+}
+.profile-social-links li a img,
+.profile-social-links li a svg {
+    width: 24px;
+}
+
+
+@media screen and (min-aspect-ratio: 4/3) {
+    body {
+        background-size: 100% 100%;
+    }
+    body:before {
+        width: 0px;
+    }
+    @-webkit-keyframes puff {
+        0% {
+            top: 100%;
+            width: 0px;
+            padding-bottom: 0px;
+        }
+    	100% {
+            top: 50%;
+            width: 100%;
+            padding-bottom: 100%;
+        }	
+    }
+    @keyframes puff {
+        0% {
+            top: 100%;
+            width: 0px;
+            padding-bottom: 0px;
+        }
+    	100% {
+            top: 50%;
+            width: 100%;
+            padding-bottom: 100%;
+        }	
+    }
+}
+@media screen and (min-height: 480px) {
+	.profile-card {
+		-webkit-animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia_portrait 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+		animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia_portrait 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
+	}
+	.profile-card header {
+        width: auto;
+        height: auto;
+        padding: 30px 20px;
+        display: block;
+        float: none;
+        border-right: none;
+    }
+    .profile-card .profile-bio {
+        width: auto;
+        height: auto;
+        padding: 15px 20px 30px 20px;
+        display: block;
+        float: none; 
+    }
+    
+}
+@media screen and (min-aspect-ratio: 4/3) {
+    body {
+        background-size: 100% auto;
+    }
+    body:before {
+        width: 0px;
+		-webkit-animation: puff_landscape 0.5s 1.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, borderRadius 0.2s 2.3s linear forwards;
+		animation: puff_landscape 0.5s 1.8s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, borderRadius 0.2s 2.3s linear forwards;
+	}
+}
+@-webkit-keyframes init {
+    0% {
+    	width: 0px;
+    	height: 0px;
+    }
+	100% {
+        width: 56px;
+        height: 56px;
+        margin-top: 0px;
+        opacity: 1;
+    }	
+}
+@keyframes init {
+    0% {
+    	width: 0px;
+    	height: 0px;
+    }
+	100% {
+        width: 56px;
+        height: 56px;
+        margin-top: 0px;
+        opacity: 1;
+    }	
+}
+@-webkit-keyframes puff_portrait {
+    0% {
+        top: 100%;
+        height: 0px;
+        padding: 0px;
+    }
+	100% {
+        top: 50%;
+        height: 100%;
+        padding: 0px 100%;
+    }	
+}
+@keyframes puff_portrait {
+    0% {
+        top: 100%;
+        height: 0px;
+        padding: 0px;
+    }
+	100% {
+        top: 50%;
+        height: 100%;
+        padding: 0px 100%;
+    }	
+}
+@-webkit-keyframes puff_landscape {
+	0% {
+		top: 100%;
+		width: 0px;
+		padding-bottom: 0px;
+	}
+	100% {
+		top: 50%;
+		width: 100%;
+		padding-bottom: 100%;
+	}	
+}
+@keyframes puff_landscape {
+	0% {
+		top: 100%;
+		width: 0px;
+		padding-bottom: 0px;
+	}
+	100% {
+		top: 50%;
+		width: 100%;
+		padding-bottom: 100%;
+	}	
+}
+@-webkit-keyframes borderRadius {
+    0% {
+        -webkit-border-radius: 50%;
+    }
+	100% {
+        -webkit-border-radius: 0px;
+    }	
+}
+@keyframes borderRadius {
+    0% {
+        -webkit-border-radius: 50%;
+    }
+	100% {
+        border-radius: 0px;
+    }	
+}
+@-webkit-keyframes moveDown {
+    0% {
+   	    top: 50%;
+    }
+	50% {
+	   top: 40%;
+    }
+    100% {
+       top: 100%;
+    }	
+}
+@keyframes moveDown {
+    0% {
+   	    top: 50%;
+    }
+	50% {
+	   top: 40%;
+    }
+    100% {
+       top: 100%;
+    }	
+}
+@-webkit-keyframes moveUp {
+    0% {
+        background: #FFB300;
+        top: 100%;
+    }
+	50% {
+	   top: 40%;
+    }
+    100% {
+       top: 50%;
+       background: #E0E0E0;
+    }	
+}
+@keyframes moveUp {
+    0% {
+        background: #FFB300;
+        top: 100%;
+    }
+	50% {
+	   top: 40%;
+    }
+    100% {
+       top: 50%;
+       background: #E0E0E0;
+    }	
+}
+@-webkit-keyframes materia_landscape {
+    0% {
+        background: #E0E0E0;
+    }
+    50% {
+        -webkit-border-radius: 4px;
+    }
+    100% {
+        width: 440px;
+        height: 280px;
+        background: #FFFFFF;
+        -webkit-border-radius: 4px;
+    }
+}
+@keyframes materia_landscape {
+    0% {
+        background: #E0E0E0;
+    }
+    50% {
+        border-radius: 4px;
+    }
+    100% {
+        width: 440px;
+        height: 280px;
+        background: #FFFFFF;
+        border-radius: 4px;
+    }
+}
+@-webkit-keyframes materia_portrait {
+	0% {
+		background: #E0E0E0;
+	}
+	50% {
+		-webkit-border-radius: 4px;
+	}
+	100% {
+		width: 280px;
+		height: 440px;
+		background: #FFFFFF;
+		-webkit-border-radius: 4px;
+	}
+}
+@keyframes materia_portrait {
+	0% {
+		background: #E0E0E0;
+	}
+	50% {
+		border-radius: 4px;
+	}
+	100% {
+		width: 60vw;
+		height: 440px;
+		min-width: 260px;
+		background: #FFFFFF;
+		border-radius: 4px;
+	}
+}
+@-webkit-keyframes moveIn {
+    0% {
+        margin-top: 50px;
+        opacity: 0;
+    }
+	100% { 
+        opacity: 1;
+        margin-top: -20px;
+    }	
+}
+@keyframes moveIn {
+    0% {
+        margin-top: 50px;
+        opacity: 0;
+    }
+	100% { 
+        opacity: 1;
+        margin-top: -20px;
+    }	
+}
+@-webkit-keyframes scaleIn {
+    0% {
+        -webkit-transform: scale(0);
+    }
+	100% { 
+        -webkit-transform: scale(1);
+    }	
+}
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+	100% { 
+        transform: scale(1);
+    }	
+}
+@-webkit-keyframes ripple {
+    0% {
+        transform: scale3d(0, 0, 0); 
+    }
+    50%, 100% {
+        -webkit-transform: scale3d(1, 1, 1);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes ripple {
+    0% {
+        transform: scale3d(0, 0, 0); 
+    }
+    50%, 100% {
+        transform: scale3d(1, 1, 1);
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+
+.bar1,.bar3{
+            font-weight: bolder;
+        }
+        .bar2{
+            font-weight: lighter;
+        }
+        .file {
+        display: none;
+        }
+
+        .file-input label {
+        display: block;
+        /* position: relative; */
+        padding: 10px;
+        height: 42px;
+        width: 42px;
+
+        border-radius: 50%;
+        background:rgb(216, 216, 216);
+        box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(90, 89, 89);
+        /* font-weight: bold; */
+        top: -34px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: transform .2s ease-out;
+        }
+
+        .file-name {
+        position: absolute;
+        bottom: -35px;
+        left: 10px;
+        font-size: 0.85rem;
+        color: #555;
+        }
+
+        input:hover + label,
+        input:focus + label {
+        transform: scale(1.02);
+        }
+
+        input:focus + label {
+        outline: 1px solid #000;
+        outline: -webkit-focus-ring-color auto 2px;
+        }
+
+	  </style>
+</head>
+
+<body id="page-top">
+
+
+
+
+<!-- 
+
+A concept for a chat interface. 
+
+Try writing a new message! :)
+
+
+Follow me here:
+Twitter: https://twitter.com/thatguyemil
+Codepen: https://codepen.io/emilcarlsson/
+Website: http://emilcarlsson.se/
+
+-->
+
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+
+				<span id="active_user_1">
+					<a href="{{url_for('users.account',username = current_user.username)}}" style="color: unset; text-emphasis: none;">
+					<img id="profile-img" src="{{url_for('static',filename='img/'+current_user.profile_pic)}}" style="height: 45px; width: 45px;" class="online" alt="" />
+					<p id="active_username">{{current_user.username}}</p>
+					</a>
+				</span>
+				<i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+				<!-- <div id="status-options">
+					<ul>
+						<li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+						<li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+						<li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+						<li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+					</ul>
+				</div> -->
+				<div id="expanded">
+					<label for="facebook"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+					<input name="facebook" id="save-fb" type="text" value="{{current_user.facebook_link}}"  readonly/>
+					<label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+					<input name="twitter" id="save-tw" type="text" value="{{current_user.facebook_link}}" readonly/>
+					<label for="instagram"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+					<input name="instagram" id="save-insta" type="text" value="{{current_user.instagram_link}}" readonly/>
+					
+				</div>
+			</div>
+		</div>
+		<div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input type="text" placeholder="Search users ..." id="contact-search" onkeyup="search_contacts();" />
+		</div>
+		<div id="contacts">
+			<ul>
+				{%  for chat_user in all_users %}
+					<li class="contact" onclick="get_user_box({{ chat_user.id }});">
+						<div class="wrap" style="position: relative;">
+							{% if chat_user.msg_count != 0 %}
+								<mark style="position: absolute;left: -4px; display:inline-block;line-height:0px;border-radius:50%;border:2px solid #23C552;font-size:8px; color: #fff; background: #23C552;"><p style="display:inline-block;padding-top:50%;padding-bottom:50%;margin-left:3px;margin-right:3px;">{{chat_user.msg_count}}</p></mark>
+							{% endif %}
+							<img src="{{ url_for('static',filename='img/'+chat_user.profile_pic) }}" style="height: 40px; width: 40px;" alt="" />
+							<div class="meta">
+								<p class="name" style="font-weight: bold;">{{ chat_user.username }}</p>
+								<!-- <span class="name" style="position: absolute; top: 0; left: 0; ">{{ chat_user.username }}</span> -->
+								{% if chat_user.msg_count != 0 %}
+									<p class="preview">
+								{% else %}
+									<p class="preview" style="color: rgb(150, 175, 250);">
+								{% endif%}
+									{% if chat_user.text|length > 17 %}
+										{{ chat_user.text[:17] }} ...
+									{% else %}
+										{{ chat_user.text }}
+									{% endif %}
+									<span style="float: right; margin-right: 60px; font-size: 12px;">
+										{% if (((time_now-chat_user.timestamp)|string).split(', '))[0] %}
+											{% if ((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+												{% if ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+													{{ (((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+												{% elif ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+													{{ (((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+												{% elif ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+													{{ (((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+												{% elif ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+													just now
+												{%endif%}
+											
+											{% else %}
+												{% if ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+													{{ (((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+												{% elif ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+													{% if  (((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+														(((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+													{% else %}
+														(((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+													{% endif %}
+												{% elif ((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+													{{ (((((((time_now-chat_user.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+												{%endif%}
+											{%endif%}
+										{%endif%}
+									</span>
+								</p>
+							</div>
+						</div>
+					</li>
+				{% endfor %}
+				
+				
+				
+			</ul>
+		</div>
+		<div id="bottom-bar">
+			<button id="addcontact"><a href="{{url_for('users.account',username = current_user.username)}}" style="color: #fff; text-decoration: none;"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i> <span>Profile</span></a></button>
+			<button id="settings"><a href="{{url_for('main.home')}}" style="color: #fff; text-decoration: none;"><i class="fas fa-home fa-fw" aria-hidden="true"></i> <span>Home</span></a></button>
+		</div>
+	</div>
+	<div class="content">
+
+		<!-- nav begin -->
+		
+		<nav class="navbar navbar-light navbar-expand bg-white shadow topbar static-top">
+			<div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button">
+				<div class="text-primary" style="position: relative; display: flex;">
+					<i class="fas fa-comment-alt" style="font-size: 40px; margin-top: 0px; color: rgb(59,97,209);">
+						<i class="fas fa-comment-alt" style="position: absolute; top: 11%; right: 0; left: 35%; bottom: 0; font-size: 32px; margin-top: 0px; color: rgb(22, 60, 175);"></i>
+						<img src="{{url_for('static',filename='img/logo.png')}}" style="position: absolute; height: 20px; width: 20px; left: 10px; top: 7px;"></i>
+						
+				</div> 
+			</button>
+				<div class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100">
+					<div class="text-primary mt-1" style="position: relative; display: flex;">
+						<i class="fas fa-comment-alt" style="font-size: 45px; margin-top: 8px; color: rgb(59,97,209);">
+							<i class="fas fa-comment-alt" style="position: absolute; top: 11%; right: 0; left: 4.6%; bottom: 0; font-size: 35px; margin-top: 8px; color: rgb(22, 60, 175);"></i>
+							<img src="{{url_for('static',filename='img/logo.png')}}" style="position: absolute; height: 23px; width: 23px; left: 10px; top: 16px;"></i>
+							<p class="mt-3" style="margin-left: 10px; font-size: 20px; font-weight: bold;">E-Learn</p>
+					</div> 
+				</div>
+				<ul class="nav navbar-nav flex-nowrap ml-auto">
+					
+					<li class="nav-item dropdown no-arrow mx-1" role="presentation">
+						<div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+							{% if alerts %}
+								<span class="badge badge-danger badge-counter" style="position: relative; left: 5px;">{{(alerts|length)}}</span>
+							{% elif alerts|length > 4 %}
+								<span class="badge badge-danger badge-counter">{{(alerts|length)-1}}+</span>
+							{% endif %}
+							<i class="fas fa-bell fa-fw"></i></a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+								role="menu">
+								<h6 class="dropdown-header">Notifications</h6>
+
+								{% if alerts %}
+									{% for alert in alerts %}
+										<a class="d-flex align-items-center dropdown-item" href="#">
+											<div class="mr-3">
+												{% if alert.title == "like" %}
+													<div class="bg-danger icon-circle"><i class="fas fa-heart text-white"></i></div>
+												{% elif alert.title == "comment" %}
+													<div class="bg-info icon-circle"><i class="fas fa-comment-alt text-white"></i></div>
+												{% endif %}
+											</div>
+											<div><span class="small text-gray-500">{{alert.timestamp.strftime("%B %d, %Y")}}</span>
+												<p>{{alert.text}}</p>
+											</div>
+										</a>
+									{% endfor %}
+								{% else %}
+									<a class="text-center small dropdown-item text-gray-600" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">No Notifications Yet</a></div>
+								{% endif %}
+								
+								<!-- <a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div> -->
+						</div>
+					</li>
+					<li class="nav-item dropdown no-arrow mx-1" role="presentation">
+						<div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+							<i class="fas fa-envelope fa-fw"></i>
+							{% if all_notify_len %}
+								<span class="badge badge-danger badge-counter">{{all_notify_len}}</span>
+							{% endif %}
+							</a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+								role="menu">
+								<h6 class="dropdown-header">Message Inbox</h6>
+								{% if all_notify %}
+
+									{% for notify in all_notify %}
+										<a class="d-flex align-items-center dropdown-item" href="#" style="position: relative;">
+											<div class="dropdown-list-image mr-3">
+												
+												<img class="rounded-circle" src="{{ url_for('static',filename='img/'+notify.profile_pic) }}" style="height: 40px; width: 40px;">
+												<div class="bg-secondary status-indicator"></div>
+											</div>
+											<div class="font-weight-bold">
+												<div class="text-truncate"><span>
+													{% if notify.text != "None" %}
+														{% if notify.text|length > 17 %}
+															{{ notify.text[:17] }} ...
+														{% else %}
+															{{ notify.text }}
+														{% endif %}
+													{% else %}
+														Sent a file
+													{% endif %}
+
+													<span class="badge badge-success badge-counter" style="float: right; position: absolute; right: 14px; top: 30%;">
+														{% if notify.count > 9 %}
+															9+
+														{% else %}
+															{{notify.count}}
+														{% endif %}
+													</span>
+												</span></div>
+												<p class="small text-gray-500 mb-0">{{notify.username}} - 
+													{% if (((time_now-notify.timestamp)|string).split(', '))[0] %}
+											{% if ((((time_now-notify.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+												{% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+													just now
+												{%endif%}
+											
+											{% else %}
+												{% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+													{% if  (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+														(((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+													{% else %}
+														(((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+													{% endif %}
+												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+												{%endif%}
+											{%endif%}
+										{%endif%} 
+												</p>
+											</div>
+										</a>
+										
+									{% endfor %}
+									<a class="text-center dropdown-item small text-gray-500" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">Show All Messages</a></div>
+								{% else %}
+										
+								<a class="text-center small dropdown-item text-gray-600" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">No Messages Yet</a></div>
+								{% endif %}
+								
+								
+						</div>
+						<div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
+					</li>
+					<div class="d-none d-sm-block topbar-divider"></div>
+					<li class="nav-item dropdown no-arrow" role="presentation">
+						<div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{current_user.username}}</span><img class="border rounded-circle img-profile" src="{{url_for('static',filename='img/'+current_user.profile_pic)}}"></a>
+							<div
+								class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
+								<a
+									class="dropdown-item" role="presentation" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
+									<div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="{{url_for('users.logout')}}"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- nav end -->
+		<span id="chat_frame_2">
+			<div class="messages" id="all_chats_container" onscroll="scrollFunction();">
+				<ul id="chat_frame_1">
+
+				<aside class="profile-card">
+
+					<header>
+					
+						<!-- here’s the avatar -->
+						<a href="{{url_for('users.account',username = current_user.username)}}">
+							<img src="{{url_for('static',filename='img/'+current_user.profile_pic)}}" />
+						</a>
+						
+						<!-- the username -->
+						<h1 class="text-primary">{{current_user.first_name|title}} {{current_user.last_name|title}}</h1>
+						
+						<!-- and role or location -->
+						<h2 class="text-muted">{{current_user.user_type|title}}</h2>
+					
+					</header>
+
+					<!-- bit of a bio; who are you? -->
+					<div class="profile-bio">
+					
+						<p style="line-height: 20px;">
+							Hi, {{current_user.username}} this is the E-Learn's messaging platform to help to communicate with other users. So begin your journey, make new friends, do some chit-chat and don't forget to look for other features of <span class="text-primary" style="font-weight: bold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">E-Learn</span>. And now lets begin...
+						</p>
+					
+					</div>
+
+					
+
+				</aside>
+					
+				<button onclick="topFunction()" id="myBtn" style="display: none; position: fixed;bottom: 80px;right: 30px;z-index: 99;font-size: 18px;border: none;outline: none;background-color: rgba(16, 17, 20, 0.5);color: white;cursor: pointer;padding: 10px;padding-left: 15px; padding-right: 15px; border-radius: 4px;" title="Go to top"><i class="fas fa-angle-down"></i></button>
+
+				</ul>
+				
+			</div>
+			<div class="message-input" style="background: #f5f5f5;">
+				<div class="wrap" style="padding-top: 0px; padding-left: 10px; padding-right:10px; padding-bottom:10px;">
+					<div class="input-group mb-3" style="position: relative; top: 10px;">
+						<textarea class="form-control" id="type-message" style="height: 40px; border-radius: 50px; padding-left:20px; padding-right: 30px; resize: none; overflow: hidden;" placeholder="Type a message"></textarea>
+						<div class="input-group-append ml-2" style="background: transparent;">
+							<span class="input-group-text" style="padding: 0; background: transparent; border-radius: 50%;">
+								<form id="upload_pic" method="post" enctype="multipart/form-data">
+									<div class="file-input">
+										
+										<input type="file" id="pic_1" class="file" name="pic_1" accept="image/*">
+										
+										
+										<center><label tabindex="0" for="pic_1" id = "pic_01" data-toggle="popover" data-trigger="hover" data-content="No Image File Detected. Tap on the button to upload an image.">
+											<i class="fas fa-paperclip" id="plus"></i>
+										
+										
+										</label></center>
+										
+										
+									</div>
+								</form>
+							</span>
+						</div>
+						<div class="input-group-append ml-2" style="background: transparent;">
+						<span class="input-group-text" onclick="save_msg();" id="submit-message" style="padding: 0; background: transparent; border-radius: 50%;"><a class="btn btn-primary" style="color: #fff; border-radius: 50%; padding: 8px 12px 8px 12px; box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);"><i class="fas fa-paper-plane"></i></a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</span>
+
+	</div>
+</div>
+
+<!-- <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script> -->
+<script src="{{url_for('static',filename='assets/js/jquery.min.js')}}"></script>
+<script src="{{url_for('static',filename='assets/bootstrap/js/bootstrap.min.js')}}"></script>
+
+
+
+
+<script>
+	
+        
+	$(document).ready(function() {
+        const file = document.querySelector('#pic_1');
+        file.addEventListener('change', (e) => {
+        // Get the selected file
+        const [file] = e.target.files;
+        // Get the file name and size
+        const { name: fileName, size } = file;
+        // Convert size in bytes to kilo bytes
+        const fileSize = (size / 1000).toFixed(2);
+        // Set the text content
+        const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+        if (fileNameAndSize != null){
+            
+            var f = document.getElementById('pic_01');
+            f.style.backgroundColor = "#2ed573";
+			document.getElementById('plus').className = "fas fa-check";
+			document.getElementById('plus').style.color = "#fff";
+            f.setAttribute('data-content',fileNameAndSize);
+
+        }
+        else{
+            document.getElementById('pic_01').style.backgroundColor = "#ff4757";
+			document.getElementById('plus').className = "fas fa-times";
+			document.getElementById('plus').style.color = "#tomato";
+        }
+		});
+	});
+
+
+    
+
+</script>
+
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="popover"]').popover();
+	});
+
+</script>
+<script>
+
+	$(document).ready(function (e) {
+	$('#upload_pic').on('submit',(function(e) {
+		e.preventDefault();
+		var formData = new FormData(this);
+		
+		var typed_text = document.getElementById('type-message').value
+		if(typed_text == ""){
+			typed_text = "None";
+		}
+
+	$.ajax({
+		type:'POST',
+		url: "/send_pic/"+global_user_id+"/"+typed_text,
+		data:formData,
+		cache:false,
+		contentType: false,
+		processData: false,
+		success:function(data){
+			console.log("success");
+			console.log(data);
+
+			received_msg_refresh();
+			contacts_refresh();
+			document.getElementById('type-message').value = "";
+			// window.location = '#get_at_btm';
+			$('.messages').scrollTop($('.messages')[0].scrollHeight);
+			setTimeout(function(){
+				var f = document.getElementById('pic_01');
+				f.style.backgroundColor = "rgb(216, 216, 216)";
+				document.getElementById('plus').className = "fas fa-paperclip";
+				document.getElementById('plus').style.color = "rgb(90,89,89)";
+			},1000);
+		},
+		error: function(data){
+			console.log("error");
+			console.log(data);
+			}
+		});
+	}));
+
+		$("#pic_1").on("change", function() {
+			$("#upload_pic").submit();
+		});
+	});
+
+
+</script>
+
+<script>
+
+
+            function scrollFunction() {
+			var e = document.getElementById('all_chats_container');
+			
+            if (e.scrollTop+e.clientHeight < e.scrollHeight - 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+            }
+
+            function topFunction() {
+				$('.messages').scrollTop($('.messages')[0].scrollHeight);
+            }
+  
+    </script>
+<script>
+	
+// $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+$('.messages').scrollTop($('.messages')[0].scrollHeight);
+
+$("#profile-img").click(function() {
+	$("#status-options").toggleClass("active");
+});
+
+$(".expand-button").click(function() {
+  $("#profile").toggleClass("expanded");
+	$("#contacts").toggleClass("expanded");
+});
+
+$("#status-options ul li").click(function() {
+	$("#profile-img").removeClass();
+	$("#status-online").removeClass("active");
+	$("#status-away").removeClass("active");
+	$("#status-busy").removeClass("active");
+	$("#status-offline").removeClass("active");
+	$(this).addClass("active");
+	
+	if($("#status-online").hasClass("active")) {
+		$("#profile-img").addClass("online");
+	} else if ($("#status-away").hasClass("active")) {
+		$("#profile-img").addClass("away");
+	} else if ($("#status-busy").hasClass("active")) {
+		$("#profile-img").addClass("busy");
+	} else if ($("#status-offline").hasClass("active")) {
+		$("#profile-img").addClass("offline");
+	} else {
+		$("#profile-img").removeClass();
+	};
+	
+	$("#status-options").removeClass("active");
+});
+
+
+
+//# sourceURL=pen.js
+</script>
+
+<script>
+
+	var global_user_id = "{{user.id}}"
+	var current_user_id = "{{current_user.id}}"
+	var msg_count_before = parseInt("{{received_msg_len}}")
+	var seen_msg_count_before = parseInt("{{seen_message_len}}")
+	
+	
+
+
+
+	function save_msg(id){     
+			
+			
+			var typed_text = document.getElementById('type-message').value
+			if(typed_text!=""){
+				$.ajax({
+				url: "/chats_refresh/"+global_user_id,
+				type: "POST",
+				data: {'data':typed_text, 'user_id':global_user_id},
+				success: function(response) {
+					
+					// console.log(response);
+					document.getElementById('chat_frame_1').innerHTML = response;
+					document.getElementById('type-message').value = "";
+					// window.location = '#get_at_btm';
+					$('.messages').scrollTop($('.messages')[0].scrollHeight);
+					contacts_refresh();
+					// setTimeout(function(){
+					// 	console.log("calling");
+					// 	received_msg_refresh(global_user_id);},1000);
+					
+				},
+				error: function(xhr) {
+					//Do Something to handle error
+				}
+				});
+			}
+			else{
+				document.getElementById('type-message').setAttribute('placeholder',"Message can't be empty");
+				setTimeout(function(){document.getElementById('type-message').setAttribute('placeholder',"Type a message");},2000)
+			}
+		}
+
+		
+
+
+	function get_user_box(id){
+
+		global_user_id = id;
+
+		// console.log(id);
+		$.ajax({
+		url: "/chat_box/"+id,
+		type: "GET",
+		data: {'user_id':id},
+		success: function(response) {
+			
+			// console.log(response);
+			document.getElementById('chat_frame_1').innerHTML = response.page;
+			msg_count_before = response.count
+			// document.getElementById('type-message').value = "";
+			// window.location = '#get_at_btm';
+			$('.messages').scrollTop($('.messages')[0].scrollHeight);
+			get_active_user_details(response.active_user_id);
+			msg_count_before = response.count
+			seen_msg_count_before = response.seen_message_count
+			contacts_refresh();
+			console.log(response.fb);
+			document.getElementById('save-fb').value = response.fb;
+			document.getElementById('save-tw').value = response.tw;
+			document.getElementById('save-insta').value = response.insta;
+			
+		},
+		error: function(xhr) {
+			//Do Something to handle error
+		}
+		});
+		}
+
+		function get_active_user_details(id){
+
+			
+			$.ajax({
+			url: "/get_active/"+global_user_id,
+			type: "GET",
+			data: {'user_id':id},
+			success: function(response) {
+				
+				// console.log(response);
+				document.getElementById('active_user_1').innerHTML = response.page;
+				
+				
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+			});
+			}
+
+
+		function received_msg_refresh(id){
+
+						
+			
+			$.ajax({
+			url: "/chats_refresh/"+global_user_id,
+			type: "GET",
+			data: {'user_id':global_user_id},
+			success: function(response) {
+				
+				console.log("got message");
+				document.getElementById('chat_frame_1').innerHTML = response;
+				$('.messages').scrollTop($('.messages')[0].scrollHeight);
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+			});
+		}
+
+		function contacts_refresh(){
+
+			
+			$.ajax({
+			url: "/contacts_refresh/"+ global_user_id +"/{{current_user.id}}",
+			type: "GET",
+			data: {'user_id':"{{current_user.id}}"},
+			success: function(response) {
+				
+				console.log(response);
+				document.getElementById('contacts').innerHTML = response.page;
+				
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+			});
+		}
+
+		function search_contacts(){
+			var typed_query = document.getElementById('contact-search').value
+			if(typed_query != ""){
+				$.ajax({
+				url: "/contacts_search/{{current_user.id}}",
+				type: "GET",
+				data: {'user_id':"{{current_user.id}}",'data':typed_query},
+				success: function(response) {
+					
+					console.log(response);
+					document.getElementById('contacts').innerHTML = response.page;
+					
+				},
+				error: function(xhr) {
+					//Do Something to handle error
+				}
+				});
+			}
+			else{
+				contacts_refresh();
+			}
+		}
+
+
+		
+		function check_change(){
+
+			$.ajax({
+			url: "/check_count/"+global_user_id,
+			type: "GET",
+			data: {'count':msg_count_before,'seen_count':seen_msg_count_before},
+			success: function(response) {
+				console.log(response);
+				
+				if(response.count_check=="true"){
+					received_msg_refresh(global_user_id);
+					contacts_refresh();
+					msg_count_before = response.msg_count;
+					seen_msg_count_before = response.seen_message_count;
+					
+				}
+				if(response.contact_check=="true"){
+					contacts_refresh();
+				}
+				
+				
+			},
+			error: function(xhr) {
+				//Do Something to handle error
+			}
+			});
+
+		}
+		setInterval(function(){check_change();}, 2000);
+		
+	//     window.onload = function exampleFunction() { 
+		
+	// } 
+		
+		
+		
+
+</script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+	  
+	  $(".alert").css("-webkit-animation-play-state", "running");
+	  $(".alert").css("animation-play-state", "running");
+	  
+	  window.setTimeout(function() {
+  
+		
+		$(".alert").css("-webkit-animation-play-state", "paused");
+		$(".alert").css("animation-play-state", "paused");
+		$(".alert").remove(); 
+		  
+  
+		console.log("HHHHH");
+	  }, 2000);
+	});
+</script>
+</body>
+
+</html>

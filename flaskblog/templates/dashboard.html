@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard | E-Learn</title>
+    <link rel="stylesheet" href="{{url_for('static',filename = 'assets/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/fonts/fontawesome-all.min.css')}}">
+    <style>
+        .bar1,.bar3{
+            font-weight: bolder;
+        }
+        .bar2{
+            font-weight: lighter;
+        }
+        .file {
+        display: none;
+        }
+
+        .file-input label {
+        display: block;
+        position: relative;
+        padding: 10px;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background:rgb(59,97,209);
+        box-shadow: 0 4px 7px rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform .2s ease-out;
+        }
+
+        .file-name {
+        position: absolute;
+        bottom: -35px;
+        left: 10px;
+        font-size: 0.85rem;
+        color: #555;
+        }
+
+        input:hover + label,
+        input:focus + label {
+        transform: scale(1.02);
+        }
+
+        /* Adding an outline to the label on focus */
+        input:focus + label {
+        outline: 1px solid #000;
+        outline: -webkit-focus-ring-color auto 2px;
+        }
+        .fa-heart:hover,.fa-heart:focus{
+            scale: 1.2;
+            transition: 0.1s ease-in-out;
+            animation: beatHeart 0.8s 1;
+        }
+        @keyframes beatHeart {
+        0% {
+            transform: scale(1);
+        }
+        25% {
+            transform: scale(1.1);
+        }
+        40% {
+            transform: scale(1);
+        }
+        60% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+        }
+
+        .post-body,.post-body:hover{
+            text-decoration: none;
+            color: unset;
+        }
+
+        .icon-trash {
+        width: 28px;
+        height: 40px;
+        fill: tomato;
+        cursor: pointer;
+        }
+
+        .icon-trash:hover{
+            scale: 1.1;
+        }
+
+        .trash-lid {
+        transform-origin: right bottom;
+        transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .icon-trash:hover .trash-lid {
+        
+        transform: translateY(-1px) rotate(15deg);
+        }
+
+        /* comment animation */
+       
+    </style>
+    <style>
+        .alert{
+          animation: fadeOut 2s 1;
+          animation-play-state: paused;
+        }
+        @keyframes fadeOut {
+          0% {opacity: 1;
+              
+          }
+          100% {opacity: 0;
+            transform: translateY(50px);
+          }
+        } 
+    </style>
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15">
+                        <!-- logo -->
+                            <span>
+                                <img src="{{ url_for('static',filename = 'img/logo.png') }}" style="width: 28px; height: 28px;">
+                            </span>
+                        <!-- logo end -->
+                    </div>
+                    <div class="sidebar-brand-text mx-3"><span>E - Learn</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{{url_for('main.home')}}"><i class="fas fa-home"></i><span>Home</span></a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('users.account', username = current_user.username)}}"><i class="fas fa-user"></i><span>Profile</span></a></li>
+                    {% if current_user.user_type == "school" and current_user.is_authenticated %}
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('main.users_table')}}"><i class="fas fa-table"></i><span>Table</span></a></li>
+                    {% endif %}
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('users.chat_room', user_id = current_user.id, id1 = current_user.id)}}"><i class="fas fa-comment-alt"></i><span>Message</span></a></li>
+                    {% if not current_user.is_authenticated %}
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('users.login')}}"><i class="far fa-user-circle"></i><span>Login</span></a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('users.login')}}"><i class="fas fa-user-circle"></i><span>Register</span></a></li>
+                    {% else %}
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('users.logout')}}"><i class="fas fa-sign-out-alt" style="font-size: 15px;"></i><span>Logout</span></a></li>
+                    {% endif %}
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content" style="position: relative;">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <form class="form-inline d-none d-sm-inline-block mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" style="position: relative;">
+
+                            <div class="input-group">
+                                <input class="bg-light form-control small" style="border-radius: 4px; border-width: 0px; border-bottom: 2px solid rgb(114, 146, 235);" type="text" placeholder="Search for ..." id="search_for-1" onkeyup="search_home();">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary py-0 ml-2" style="border-radius: 5px; border-width: 0; color: rgb(114, 146, 235); background: transparent;" type="button">
+                                        <i class="fas fa-times" style="color: transparent;" onclick="closeit();" id="close-drop">
+                                        </i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- <div class="list-group" >
+                                
+                            </div> -->
+                            <div class="row" style="z-index: 99; position: absolute; top: 120%; left: 0%; width: 97%; display: none;" id="search_home_frame">
+                                <div class="col-lg-12 col-xl-12">
+                                    <div class="card shadow mb-4">
+                                        
+                                        <div class="card-body">
+                                            
+                                            
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                        </form>
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
+                                    <form class="form-inline mr-auto navbar-search w-100">
+                                        <div class="input-group">
+                                            <input class="bg-light form-control small" style="border-radius: 4px; border-width: 0px; border-bottom: 2px solid rgb(114, 146, 235);" type="text" placeholder="Search for ..." id="search_for-12" onkeyup="search_home2();">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary py-0 ml-2" style="border-radius: 5px; border-width: 0; color: rgb(114, 146, 235); background: transparent;" type="button">
+                                                    <i class="fas fa-times" style="color: transparent;" onclick="closeit2();" id="close-drop2">
+                                                    </i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                        
+                                    </form>
+                                    <div class="row" style="z-index: 99; position: absolute; top: 120%; left: 5%; width: 97%; display: none;" id="search_home_frame2">
+                                        <div class="col-lg-12 col-xl-12">
+                                            <div class="card shadow mb-4">
+                                                
+                                                <div class="card-body">
+                                                    
+                                                    
+        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                                    {% if alerts %}
+                                        <span class="badge badge-danger badge-counter" style="position: relative; left: 5px;">{{(alerts|length)}}</span>
+                                    {% elif alerts|length > 4 %}
+                                        <span class="badge badge-danger badge-counter">{{(alerts|length)-1}}+</span>
+                                    {% endif %}
+                                    <i class="fas fa-bell fa-fw"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                                        role="menu">
+                                        <h6 class="dropdown-header">Notifications</h6>
+
+                                        {% if alerts %}
+                                            {% for alert in alerts %}
+                                                <a class="d-flex align-items-center dropdown-item" href="#">
+                                                    <div class="mr-3">
+                                                        {% if alert.title == "like" %}
+                                                            <div class="bg-danger icon-circle"><i class="fas fa-heart text-white"></i></div>
+                                                        {% elif alert.title == "comment" %}
+                                                            <div class="bg-info icon-circle"><i class="fas fa-comment-alt text-white"></i></div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div><span class="small text-gray-500">{{alert.timestamp.strftime("%B %d, %Y")}}</span>
+                                                        <p>{{alert.text}}</p>
+                                                    </div>
+                                                </a>
+                                            {% endfor %}
+                                        {% else %}
+                                            <a class="text-center small dropdown-item text-gray-600" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">No Notifications Yet</a></div>
+                                        {% endif %}
+                                        
+                                        <!-- <a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div> -->
+                                </div>
+                            </li>
+                            
+                            <li class="nav-item dropdown no-arrow mx-1" role="presentation">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    {% if all_notify_len %}
+                                        <span class="badge badge-danger badge-counter">{{all_notify_len}}</span>
+                                    {% endif %}
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
+                                        role="menu">
+                                        <h6 class="dropdown-header">Message Inbox</h6>
+                                        {% if all_notify %}
+
+                                            {% for notify in all_notify %}
+                                                <a class="d-flex align-items-center dropdown-item" href="#" style="position: relative;">
+                                                    <div class="dropdown-list-image mr-3">
+                                                        
+                                                        <img class="rounded-circle" src="{{ url_for('static',filename='img/'+notify.profile_pic) }}" style="height: 40px; width: 40px;">
+                                                        <div class="bg-secondary status-indicator"></div>
+                                                    </div>
+                                                    <div class="font-weight-bold">
+                                                        <div class="text-truncate"><span>
+                                                            {% if notify.text != "None" %}
+                                                                {% if notify.text|length > 17 %}
+                                                                    {{ notify.text[:17] }} ...
+                                                                {% else %}
+                                                                    {{ notify.text }}
+                                                                {% endif %}
+                                                            {% else %}
+                                                                Sent a file
+                                                            {% endif %}
+
+                                                            <span class="badge badge-success badge-counter" style="float: right; position: absolute; right: 14px; top: 30%;">
+                                                                {% if notify.count > 9 %}
+                                                                    9+
+                                                                {% else %}
+                                                                    {{notify.count}}
+                                                                {% endif %}
+                                                            </span>
+                                                        </span></div>
+                                                        <p class="small text-gray-500 mb-0">{{notify.username}} - 
+                                                            {% if (((time_now-notify.timestamp)|string).split(', '))[0] %}
+                                                    {% if ((((time_now-notify.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                                        {% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                                            {{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                                        {% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                                            {{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                                        {% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                                            {{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                                        {% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                                            just now
+                                                        {%endif%}
+                                                    
+                                                    {% else %}
+                                                        {% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                                            {{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                                        {% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                                            {% if  (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                                                (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                            {% else %}
+                                                                (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                            {% endif %}
+                                                        {% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                                            {{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                                        {%endif%}
+                                                    {%endif%}
+                                                {%endif%} 
+                                                        </p>
+                                                    </div>
+                                                </a>
+                                                
+                                            {% endfor %}
+                                            <a class="text-center dropdown-item small text-gray-500" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">Show All Messages</a></div>
+                                        {% else %}
+                                                
+                                        <a class="text-center small dropdown-item text-gray-600" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">No Messages Yet</a></div>
+                                        {% endif %}
+                                        
+                                        
+                                </div>
+                                <div class="shadow dropdown-list dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown"></div>
+                            </li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                            <li class="nav-item dropdown no-arrow" role="presentation">
+                                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">{{current_user.username}}</span><img class="border rounded-circle img-profile" src="{{url_for('static',filename='img/'+current_user.profile_pic)}}"></a>
+                                    <div
+                                        class="dropdown-menu shadow dropdown-menu-right animated--grow-in" role="menu"><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Profile</a><a class="dropdown-item" role="presentation" href="#"><i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Settings</a>
+                                        <a
+                                            class="dropdown-item" role="presentation" href="#"><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Activity log</a>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item" role="presentation" href="{{url_for('users.logout')}}"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>&nbsp;Logout</a></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                
+            <div class="container-fluid">
+                
+                <div class="row">
+                    <div class="col-lg-7 col-xl-8">
+
+                        <div class="card shadow mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary font-weight-bold m-0">Recent Posts</h6>
+                                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                    <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
+                                        role="menu">
+                                        <a class="dropdown-item" role="presentation" href="#"  data-toggle="modal" data-target="#new_post">&nbsp;Create new post</a>
+                                        <a class="dropdown-item" role="presentation" href="{{url_for('main.local')}}">&nbsp;{{current_user.school|title}}'s Post</a>
+                                        <a class="dropdown-item" role="presentation" href="{{url_for('main.home')}}">&nbsp;Global Post</a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card-body">
+                                {%for post in posts_with_like_count%} 
+                                    <!-- post begin -->
+                                    <div class="card mb-3">
+                                        <!-- <img class="card-img-top" src="{{url_for('static',filename='img/wallpaper1.webp')}}" alt="Card image cap"> -->
+                                        <!-- carousel -->
+
+                                        <div id="myCarousel{{post.id}}" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                                {% if post.pic_1 != "NO IMAGE"%}
+                                                    <div class="carousel-item active">
+                                                        <img src="{{url_for('static',filename = 'img/'+post.pic_1)}}" class="d-block w-100" alt="...">
+                                                    </div>
+                                                {%endif%}
+                                                {% if post.pic_2 != "NO IMAGE"%}
+                                                    <div class="carousel-item">
+                                                        <img src="{{url_for('static',filename = 'img/'+post.pic_2)}}" class="d-block w-100" alt="...">
+                                                    </div>
+                                                {%endif%}
+                                                {% if post.pic_3 != "NO IMAGE"%}
+                                                    <div class="carousel-item">
+                                                        <img src="{{url_for('static',filename = 'img/'+post.pic_3)}}" class="d-block w-100" alt="...">
+                                                    </div>
+                                                {%endif%}
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" onclick="$('#myCarousel{{post.id}}').carousel('prev')">
+                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                              <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" onclick="$('#myCarousel{{post.id}}').carousel('next')">
+                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                              <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+
+
+                                        
+                                        
+                                        <!-- end -->
+                                        
+                                        <div class="card-body">
+                                            <!-- begin -->
+                                            <div class="d-flex align-items-center" style="padding-left: 0;" href="#">
+                                                <div class="mr-3 mt-n3">
+                                                    <div class=""><img src="{{ url_for('static',filename='img/'+ post.post_profile_pic) }}" style="height: 42px; width: 42px; border-radius: 50%;"><i class="fas fa-circle" style="color: turquoise; position: relative; float: right; margin-left:-20px; margin-top: 30px; font-size: 10px;"></i></div>
+                                                </div>
+                                                <a class="post-body" href="{{url_for('posts.post', post_id = post.id)}}">
+                                                <div>
+                                                    <span class="" style="font-weight: bolder; color: rgb(73, 113, 223);">{{ post.username|title }}</span>
+                                                    <p class="small text-gray-500">{{ post.user_type|title }}</p>
+                                                </div></a><hr/>
+                                                <!-- <div>
+                                                    <span class="small text-gray-500">last active</span>
+                                                    <p class="small text-gray-500">Time posted</p>
+                                                </div> -->
+                                            </div>
+                                            <!-- <h5 class="card-title">Card title</h5> -->
+                                            <a class="post-body" href="{{url_for('posts.post', post_id = post.id)}}"><p class="card-text" style="padding-bottom: 15px; padding-top: 10px; font-weight:normal;">{{post.post_title}}</p></a>
+                                        
+                                            <span class="card-text"><small class="text-muted">
+                                                {% if (((time_now-post.date_posted)|string).split(', '))[0] %}
+                                                    {% if ((((time_now-post.date_posted)|string).split(', '))[0]).split(':')|length > 1 %}
+                                                        {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                                            just now
+                                                        {%endif%}
+                                                    
+                                                    {% else %}
+                                                        {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                                            {% if  (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                                                (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                            {% else %}
+                                                                (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                            {% endif %}
+                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                                        {%endif%}
+                                                    {%endif%}
+                                                {%endif%} 
+                                            </small></span>
+                                            <span class="card-text" style="float: right;">
+                                                {% if post.like_status == "true" %}
+                                                    <span class="small text-muted" onclick="like_check({{post.id}});" ><span id="like_count{{post.id}}">{{ post.no_of_likes }}</span> <i class="fas fa-heart" style="margin-right: 5px; color: rgb(248, 79, 79);" id="post{{post.id}}"></i></span>
+                                                {% else %}
+                                                    <span class="small text-muted" onclick="like_check({{post.id}});" ><span id="like_count{{post.id}}">{{ post.no_of_likes }}</span> <i class="far fa-heart" style="margin-right: 5px;" id="post{{post.id}}"></i></span>
+                                                {%endif%}
+                                                {% if post.comment_status == 'true' %}
+                                                    <span class="small text-muted"><span id="comment_count{{post.id}}">{{ post.no_of_comments }}</span> <i class="fas fa-comment" id="comment{{post.id}}" style="color: rgb(96, 122, 202);"></i></span>
+                                                {% else %}
+                                                    <span class="small text-muted"><span id="comment_count{{post.id}}">{{ post.no_of_comments }}</span> <i class="far fa-comment" id="comment{{post.id}}"></i></span>
+                                                {%endif%}
+                                            </span>
+                                            <br/>
+                                            <br/>
+                                            <hr/>
+                                            <div class="input-group">
+                                                
+                                                
+                                                <input type="text" class="form-control" style="border-radius: 2px;" id = "post-comment-{{post.id}}" placeholder="Comment here ..." aria-label="Input group example" aria-describedby="btnGroupAddon">
+                                                <div class="input-group-append ml-2" style="border-radius: 2px; border: 0px solid transparent;" >
+                                                    <a class="btn btn-primary" style="border-radius: 2px;"  id="btnGroupAddon" onclick="add_comment({{post.id}});"><i class="fas fa-paper-plane" style="color: #fff;"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                
+                                    
+                                    
+                                    <!-- end -->
+                                {% endfor %}
+
+                            </div>
+                            <div class="card-footer">
+                                <!-- <div class="" > -->
+                                    
+                                    <ul class="pagination mt-2" style="justify-content: center;">
+                                        {% for no in posts.iter_pages(left_edge = 1,right_edge = 1, left_current = 1, right_current = 2) %}
+                                            {% if no %}
+                                                {% if posts.page == no %}
+                                                    <!-- <a href="{{ url_for('main.home',page = no) }}" class="page-i">{{ no }}</a> -->
+                                                    <li class="page-item"><a class="page-link" style="background: rgb(67, 113, 252); color: #fff; border-color: rgb(67, 113, 252);" href="{{ url_for('main.home',page = no) }}">{{ no }}</a></li>
+                                                {% else %}
+                                                    <!-- <a href="{{ url_for('main.home',page = no) }}" class="page-i">{{ no }}</a> -->
+                                                    <li class="page-item"><a class="page-link" href="{{ url_for('main.home',page = no) }}">{{ no }}</a></li>
+                                                {% endif %}
+                                            {% else %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">...</a>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-xl-4">
+                        <!-- alerts -->
+                    {% with messages = get_flashed_messages(with_categories = true) %}
+                    {% if messages %}
+                        {% for category,message in messages%}
+                            <div>
+                                {% if category == "info" %}
+                                    <div class = "alert alert-info" ><i class="fas fa-bell fl-fw icon_bell"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button></div>
+                                    
+                                {% elif category == "success" %}
+                                    <div class = "alert alert-success" ><i class="fas fa-check-circle fl-fw icon_tick"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button></div>
+                                    
+                                {% elif category == "danger" %}
+                                    <div class = "alert alert-danger" ><i class="fas fa-times-circle fl-fw icon_danger"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button></div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                  {% endwith %}
+                        
+                        
+                        
+                    <!-- alerts end -->
+                        <div class="card shadow mb-4">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="text-primary font-weight-bold m-0">Your Todo List</h6>
+                                <i class="fas fa-plus-circle" id="add-icon" style="font-size: 20px; cursor: pointer;" onclick="addTask();"></i>
+                            </div>
+                            <div class="card-body">
+                                <div>
+                                    <input type="text" id="task-filter" onkeyup="filter_task_todo();" class="form-control mb-2" placeholder="Filter tasks ...">
+                                </div>
+
+                                <div class="input-group mb-3 mr-sm-2" >
+                                    
+                                    <input type="text" class="form-control" id="add-task" style="display: none;" id="inlineFormInputGroupUsername2" placeholder="Add Task ...">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text" style="padding: 0;"><button class="btn btn-primary" id="add-task-btn" onclick="add_task_todo();" style="display: none;" style="margin: 0; border-bottom-left-radius: 0; border-top-left-radius: 0;"><i class="fas fa-plus"></i></button></div>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush" id="task_frame-1">
+                                    
+                                    
+                                    
+                                    
+                                        {% for task in all_tasks %}
+                                            <li class="list-group-item">
+                                                <div class="row align-items-center no-gutters">
+                                                    <div class="col mr-2">
+                                                        <h6 class="mb-0"><strong>{{ task.task }}</strong></h6><span class="text-xs">
+                                                            {% if (((time_now-task.timestamp)|string).split(', '))[0] %}
+                                                                {% if ((((time_now-task.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                                                    {% if ((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                                                        {{ (((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                                                    {% elif ((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                                                        {{ (((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                                                    {% elif ((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                                                        {{ (((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                                                    {% elif ((((((time_now-task.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                                                        just now
+                                                                    {%endif%}
+                                                                
+                                                                {% else %}
+                                                                    {% if ((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                                                        {{ (((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                                                    {% elif ((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                                                        {% if  (((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                                                            (((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                                        {% else %}
+                                                                            (((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                                        {% endif %}
+                                                                    {% elif ((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                                                        {{ (((((((time_now-task.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                                                    {%endif%}
+                                                                {%endif%}
+                                                            {%endif%}
+                                                        </span></div>
+                                                    <div class="col-auto">
+                                                        <div class="dustbin"><a onclick="delete_task_todo({{task.id}});">
+                                                            <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 40" width="40" height="40">
+                                                                <path class="trash-lid" fill-rule="evenodd" d="M6 15l4 0 0-3 8 0 0 3 4 0 0 2 -16 0zM12 14l4 0 0 1 -4 0z" />
+                                                                <path class="trash-can" d="M8 17h2v9h8v-9h2v9a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2z" />
+                                                            </svg>
+                                                        </a></div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- <footer class="bg-white sticky-footer">
+        <div class="container my-auto">
+            
+        </div>
+    </footer> -->
+
+
+    <!-- modals -->
+
+    <!-- <button type="button" class="btn btn-primary">Large modal</button> -->
+
+    <div class="modal fade bd-example-modal-lg" id = "new_post" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {{ post_form.hidden_tag() }}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="form-group">
+                        <label for="post-title" class="col-form-label">Post title:</label>
+                        <!-- <input type="text" class="form-control" id="post_title" required> -->
+                        {{ post_form.post_title(class = "form-control",placeholder = "Type the title here ...") }}
+                        {% if post_form.post_title.errors %}
+                            {%for error in post_form.post_title.errors%}
+                            <p class="form-text text-danger">{{ error }}</p>
+                            {%endfor%}
+                        {% endif %}
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="post-content" class="col-form-label">Content:</label>
+                        <!-- <textarea class="form-control" id="post_content" required></textarea> -->
+                        {{ post_form.content(class="form-control", id="exampleformControlTextarea4", rows="4", placeholder = "Type the content here ...") }}
+                        {% if post_form.content.errors %}
+                            {%for error in post_form.content.errors%}
+                            <p class="form-text text-danger">{{ error }}</p>
+                            {%endfor%}
+                        {% endif %}
+                    </div>
+
+                    <select id="post_type" name="post_type" class="custom-select mb-2">
+                        <option value="global">Global Post</option>
+                        <option value="local">Local Post</option>
+                    </select>
+
+                    <div class="form-group">
+                        
+                        <!-- <input type="text" class="form-control" id="post_title" required> -->
+                        <center><h6 class="form-text text-danger mb-4">Maximum three photos can be uploaded.</h6></center>
+                        <div class="container" style="display: flex;">
+                            
+                            <div class="col-md-4">
+                                
+                                
+                            
+                                <div class="file-input">
+                                    <!-- <input type="file" id="pic_1" class="file"> -->
+                                    {{ post_form.pic_1(class = "form-control",id="pic_1",style="display:none;",placeholder = "Type the title here ...") }}
+                                    {% if post_form.pic_1.errors %}
+                                        {%for error in post_form.pic_1.errors%}
+                                        <p class="form-text text-danger">{{ error }}</p>
+                                        {%endfor%}
+                                    {% endif %}
+                                    <center><label tabindex="0" for="pic_1" id = "pic_01" data-toggle="popover" data-trigger="hover" data-content="No Image File Detected. Tap on the button to upload an image.">
+                                        <i class="fas fa-plus" id="plus"></i>
+                                    
+                                    
+                                    </label></center>
+                                    
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            <div class="col-md-4">
+                                
+
+                                <div class="file-input">
+                                    <!-- <input type="file" id="pic_1" class="file"> -->
+                                    {{ post_form.pic_2(class = "form-control",id="pic_2",style="display:none;",placeholder = "Type the title here ...") }}
+                                    {% if post_form.pic_2.errors %}
+                                        {%for error in post_form.pic_2.errors%}
+                                        <p class="form-text text-danger">{{ error }}</p>
+                                        {%endfor%}
+                                    {% endif %}
+                                    <center><label tabindex="0" for="pic_2" id = "pic_02" data-toggle="popover" data-trigger="hover" data-content="No Image File Detected. Tap on the button to upload an image.">
+                                        <i class="fas fa-plus" id="plus02"></i>
+                                    
+                                    
+                                    </label></center>
+                                    
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="file-input">
+                                    
+                                    {{ post_form.pic_3(class = "form-control",id="pic_3",style="display:none;",placeholder = "Type the title here ...") }}
+                                    {% if post_form.pic_3.errors %}
+                                        {%for error in post_form.pic_3.errors%}
+                                        <p class="form-text text-danger">{{ error }}</p>
+                                        {%endfor%}
+                                    {% endif %}
+                                    <center><label tabindex="0" for="pic_3" id = "pic_03" data-toggle="popover" data-trigger="hover" data-content="No Image File Detected. Tap on the button to upload an image.">
+                                        <i class="fas fa-plus" id="plus03"></i>
+                                    
+                                    
+                                    </label></center>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                
+                </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- <button type="submit" class="btn btn-primary">Post</button> -->
+                {{ post_form.submit(class = "btn btn-primary") }}
+              </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    
+    <!-- comment modal -->
+
+    
+
+    
+    
+
+    <!-- modals end -->
+    </div>
+    <button onclick="topFunction()" id="myBtn" style="display: none;position: fixed;bottom: 20px;right: 30px;z-index: 99;font-size: 18px;border: none;outline: none;background-color: rgba(16, 17, 20, 0.5);color: white;cursor: pointer;padding: 10px;padding-left: 15px; padding-right: 15px; border-radius: 4px;" title="Go to top"><i class="fas fa-angle-up"></i></button>
+</div>
+    <script src="{{url_for('static',filename='assets/js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/js/chart.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/js/bs-init.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="{{url_for('static',filename='assets/js/theme.js')}}"></script>
+    
+    <script>
+       
+       var mybutton = document.getElementById("myBtn");
+
+            window.onscroll = function() {scrollFunction()};
+
+            function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+            }
+
+            function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+            }
+  
+    </script>
+    <script>
+        $('.carousel').carousel({
+            interval: 5000
+        });
+
+        const file = document.querySelector('#pic_1');
+        file.addEventListener('change', (e) => {
+        // Get the selected file
+        const [file] = e.target.files;
+        // Get the file name and size
+        const { name: fileName, size } = file;
+        // Convert size in bytes to kilo bytes
+        const fileSize = (size / 1000).toFixed(2);
+        // Set the text content
+        const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+        if (fileNameAndSize != null){
+            
+            var f = document.getElementById('pic_01');
+            f.style.backgroundColor = "#2ed573";
+            document.getElementById('plus').className = "fas fa-check";
+            f.setAttribute('data-content',fileNameAndSize);
+        }
+        else{
+            document.getElementById('pic_01').style.backgroundColor = "#ff4757";
+            document.getElementById('plus').className = "fas fa-times";
+        }
+        });
+    </script>
+    <script>
+        const file02 = document.querySelector('#pic_2');
+        file02.addEventListener('change', (e) => {
+        // Get the selected file
+        const [file02] = e.target.files;
+        // Get the file name and size
+        const { name: fileName, size } = file02;
+        // Convert size in bytes to kilo bytes
+        const fileSize = (size / 1000).toFixed(2);
+        // Set the text content
+        const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+        if (fileNameAndSize != null){
+            
+            var f = document.getElementById('pic_02');
+            f.style.backgroundColor = "#2ed573";
+            document.getElementById('plus02').className = "fas fa-check";
+            f.setAttribute('data-content',fileNameAndSize);
+        }
+        else{
+            document.getElementById('pic_02').style.backgroundColor = "#ff4757";
+            document.getElementById('plus02').className = "fas fa-times";
+        }
+        });
+    </script>
+
+    <script>
+        const file03 = document.querySelector('#pic_3');
+        file03.addEventListener('change', (e) => {
+        // Get the selected file
+        const [file03] = e.target.files;
+        // Get the file name and size
+        const { name: fileName, size } = file03;
+        // Convert size in bytes to kilo bytes
+        const fileSize = (size / 1000).toFixed(2);
+        // Set the text content
+        const fileNameAndSize = `${fileName} - ${fileSize}KB`;
+        if (fileNameAndSize != null){
+            
+            var f = document.getElementById('pic_03');
+            f.style.backgroundColor = "#2ed573";
+            document.getElementById('plus03').className = "fas fa-check";
+            f.setAttribute('data-content',fileNameAndSize);
+        }
+        else{
+            document.getElementById('pic_03').style.backgroundColor = "#ff4757";
+            document.getElementById('plus03').className = "fas fa-times";
+        }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();   
+        });
+    
+    </script>
+
+    <!-- <div style=""> -->
+    <script>
+        var add_bool = true;
+        function addTask(){
+            
+            console.log(add_bool);
+            if(add_bool){
+                add_bool = false;
+                document.getElementById('task-filter').style.display = "none";
+                document.getElementById('add-task').style.display = "block";
+                document.getElementById('add-task-btn').style.display = "block";
+                document.getElementById('add-task-btn').style.borderBottomLeftRadius = 0;
+                document.getElementById('add-task-btn').style.borderTopLeftRadius = 0;
+                document.getElementById('add-icon').className = "fas fa-filter";
+                document.getElementById('add-icon').style.fontSize = "16px";
+                
+            }
+            else{
+                add_bool = true;
+                document.getElementById('add-task').style.display = "none";
+                document.getElementById('task-filter').style.display = "block";
+                document.getElementById('add-task-btn').style.display = "none";
+                document.getElementById('add-icon').className = "fas fa-plus-circle";
+                document.getElementById('add-icon').style.fontSize = "20px";
+                document.getElementById('add-icon').style.borderColor = "grey";
+                
+            }
+
+        }
+
+        function like_check(id){
+            
+
+            $.ajax({
+            url: "/like/"+id,
+            type: "get",
+            data: {post_id: id},
+            success: function(response) {
+                
+                console.log(response);
+                if(response.like_status=="true"){
+                    document.getElementById("post"+id).className = "fas fa-heart";
+                    document.getElementById("post"+id).style.color = "red";
+                    document.getElementById("like_count"+id).innerHTML = response.likes;
+
+                }
+                else if(response.like_status == "false"){
+                    document.getElementById("post"+id).className = "far fa-heart text-muted";
+                    document.getElementById("like_count"+id).innerHTML = response.likes;
+                }
+            },
+            error: function(xhr) {
+                //Do Something to handle error
+            }
+            });
+        }
+
+
+        function add_task_todo(){
+            
+            var typed_task = document.getElementById('add-task').value;
+            if (typed_task!=""){
+                $.ajax({
+                url: "/todo",
+                type: "POST",
+                data: {'data':typed_task},
+                success: function(response) {
+                    
+                    console.log(response);
+                    document.getElementById('task_frame-1').innerHTML = response;
+                    document.getElementById('add-task').value = "";
+                },
+                error: function(xhr) {
+                    //Do Something to handle error
+                }
+                });
+            }
+        }
+
+        function filter_task_todo(){
+            
+            var typed_task = document.getElementById('task-filter').value;
+            $.ajax({
+            url: "/todo",
+            type: "GET",
+            data: {'data':typed_task},
+            success: function(response) {
+                
+                console.log(response);
+                document.getElementById('task_frame-1').innerHTML = response;
+            },
+            error: function(xhr) {
+                //Do Something to handle error
+            }
+            });
+        }
+
+        function delete_task_todo(id){
+            
+            // var typed_task = document.getElementById('add-task').value;
+            $.ajax({
+            url: "/delete_task",
+            type: "POST",
+            data: {'data':id},
+            success: function(response) {
+                
+                console.log(response);
+                document.getElementById('task_frame-1').innerHTML = response;
+                // document.getElementById('add-task').value = "";
+            },
+            error: function(xhr) {
+                //Do Something to handle error
+            }
+            });
+        }
+
+        // function todo_frame(id){
+    
+        //     var req = new XMLHttpRequest();
+        //     req.onreadystatechange = function(){
+        //     if(req.readyState == 4 && req.status == 200)
+        //     {
+        //         document.getElementById('todo_frame-1').innerHTML = req.responseText;
+        //     }
+        //     }
+        //     req.open("GET", "{{ url_for('users.todo_list') }}", true);
+        //     req.send();
+        // // var messageBody = document.querySelector('#messageBody');
+        // // messageBody.scrollTop = messageBody.scrollHeight - messageBody.clientHeight;
+        // }
+
+        function add_comment(id){
+            
+            user_comment = document.getElementById('post-comment-'+id).value
+            if (user_comment != ""){
+                $.ajax({
+                url: "/comment/"+id,
+                type: "POST",
+                data: {'user_comment':user_comment},
+                success: function(response) {
+                    
+                    console.log(response);
+                    if(response.comment_status=="done"){
+                        document.getElementById("comment"+id).className = "fas fa-comment";
+                        document.getElementById("comment"+id).style.color = "rgb(59,97,209)";
+                        document.getElementById("comment_count"+id).innerHTML = response.comments;
+                        document.getElementById('post-comment-'+id).value = "";
+                    }
+                    
+                },
+                error: function(xhr) {
+                    //Do Something to handle error
+                }
+                });
+            }
+        }
+    </script>
+
+<script>
+    function like_status_check(id){
+        
+
+        $.ajax({
+        url: "/check_like_status/"+id,
+        type: "get",
+        data: {'post_id': id},
+        success: function(response) {
+            
+            console.log(response);
+            if(response.like_status=="true"){
+                document.getElementById("post"+id).className = "fas fa-heart";
+                document.getElementById("post"+id).style.color = "red";
+                document.getElementById("like_count"+id).innerHTML = response.likes;
+
+            }
+            else if(response.like_status == "false"){
+                document.getElementById("post"+id).className = "far fa-heart text-muted";
+                document.getElementById("like_count"+id).innerHTML = response.likes;
+            }
+        },
+        error: function(xhr) {
+            //Do Something to handle error
+        }
+        });
+    }
+    function closeit(){
+        document.getElementById('search_home_frame').style.display = "none";
+        document.getElementById('close-drop').style.color = "transparent";
+        document.getElementById('search_for-1').value = "";
+    }
+    function search_home(){
+        
+        var typed_query = document.getElementById('search_for-1').value
+        if(typed_query!=""){
+            $.ajax({
+            url: "/search_all",
+            type: "GET",
+            data: {'data':typed_query},
+            success: function(response) {
+                
+                console.log(response);
+                document.getElementById('search_home_frame').style.display = "block";
+                document.getElementById('close-drop').style.color = "tomato";
+                document.getElementById('search_home_frame').innerHTML = response.page;
+
+            },
+            error: function(xhr) {
+                //Do Something to handle error
+            }
+            });
+        }
+        else{
+            document.getElementById('search_home_frame').style.display = "none";
+        }
+    }
+
+
+    function closeit2(){
+        document.getElementById('search_home_frame2').style.display = "none";
+        document.getElementById('close-drop2').style.color = "transparent";
+        document.getElementById('search_for-12').value = "";
+    }
+    function search_home2(){
+        
+        var typed_query = document.getElementById('search_for-12').value
+        if(typed_query!=""){
+            $.ajax({
+            url: "/search_all",
+            type: "GET",
+            data: {'data':typed_query},
+            success: function(response) {
+                
+                console.log(response);
+                document.getElementById('search_home_frame2').style.display = "block";
+                document.getElementById('close-drop2').style.color = "tomato";
+                document.getElementById('search_home_frame2').innerHTML = response.page;
+
+            },
+            error: function(xhr) {
+                //Do Something to handle error
+            }
+            });
+        }
+        else{
+            document.getElementById('search_home_frame2').style.display = "none";
+        }
+    }
+    </script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      
+    window.setTimeout(function() {
+        $(".alert").css("-webkit-animation-play-state", "running");
+        $(".alert").css("animation-play-state", "running");
+        
+        window.setTimeout(function() {
+    
+            
+            $(".alert").css("-webkit-animation-play-state", "paused");
+            $(".alert").css("animation-play-state", "paused");
+            $(".alert").remove(); 
+            
+    
+            console.log("HHHHH");
+        }, 2000);
+    }, 3000);
+    });
+</script>
+
+</body>
+
+</html>

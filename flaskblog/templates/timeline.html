@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline</title>
+</head>
+<body>
+    {% for time in all_times %}
+
+        {% if time.title == "Task Added" %}
+            <div class="vertical-timeline-item vertical-timeline-element">
+                <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-warning"> </i> </span>
+                    <div class="vertical-timeline-element-content bounce-in">
+                        <p class="timeline-title">{{ time.title }} <b class="text-danger small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                            </b><i class="fas fa-history small ml-1"></i></p>
+                        <p> {{ time.text }}<span class="text-success"><i class="fas fa-check ml-1"></i></span></p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                    </div>
+                </div>
+            </div>
+        {% elif time.title == "Task Done" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-danger"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <h4 class="timeline-title">{{ time.title }}
+                        <b class="text-success small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        </b><i class="fas fa-history small ml-1"></i>
+                    </h4>
+                    <p>{{ time.text }}</p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% elif time.title == "Registeration Successfull" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-primary"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <h4 class="timeline-title text-success">{{ time.title }}
+                        <b class="text-danger small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        </b><i class="fas fa-history small ml-1 text-secondary"></i>
+                    </h4>
+                    <p>{{ time.text }}</p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% elif time.title == "You commented a post" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-success"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <h4 class="timeline-title">{{ time.title }} 
+                        <b class="text-info small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        </b><i class="fas fa-history small ml-1"></i>
+                    </h4>
+                    <p>{{ time.text }}</p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% elif time.title == "You got a new comment" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-warning"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <p class="timeline-title">{{ time.title }} 
+                        <b class="text-success small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        </b><i class="fas fa-history small ml-1"></i>
+                    </p>
+                    <p>{{ time.text }} </p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% elif time.title == "You liked a Post" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-warning"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <p class="timeline-title">{{ time.title }} 
+                        <b class="text-info small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        </b><i class="fas fa-history small ml-1"></i>
+                    </p>
+                    <p>{{ time.text }} </p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% elif time.title == "Someone liked your Post" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-danger"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <h4 class="timeline-title">{{ time.title }}
+                        <b class="text-danger small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        
+                    </b><i class="fas fa-history small ml-1"></i></h4>
+                    <p>{{ time.text }}</p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% elif time.title == "Profile Pic Updated" %}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-danger"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <h4 class="timeline-title">{{ time.title }}
+                        <b class="text-danger small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        
+                    </b><i class="fas fa-history small ml-1"></i></h4>
+                    <p>{{ time.text }}<br/>
+                        <img class="mt-2" src="{{url_for('static',filename = 'img/'+user.profile_pic)}}" style="border-radius: 5px;" width="240">
+                    </p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {%else%}
+        <div class="vertical-timeline-item vertical-timeline-element">
+            <div> <span class="vertical-timeline-element-icon bounce-in"> <i class="badge badge-dot badge-dot-xl badge-primary"> </i> </span>
+                <div class="vertical-timeline-element-content bounce-in">
+                    <h4 class="timeline-title text-success">{{ time.title }}
+                        <b class="text-danger small ml-1">
+                            {% if (((time_now-time.timestamp)|string).split(', '))[0] %}
+                                {% if ((((time_now-time.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                        just now
+                                    {%endif%}
+                                
+                                {% else %}
+                                    {% if ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+                                        {% if  (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% else %}
+                                            (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                        {% endif %}
+                                    {% elif ((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+                                        {{ (((((((time_now-time.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+                                    {%endif%}
+                                {%endif%}
+                            {%endif%}
+                        </b><i class="fas fa-history small ml-1"></i>
+                    </h4>
+                    <p>{{ time.text }}</p> <span class="vertical-timeline-element-date">{{ time.time_am_pm }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+                                
+                                
+    
+
+</body>
+</html>

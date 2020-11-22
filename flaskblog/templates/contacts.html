@@ -1,0 +1,45 @@
+<ul>
+    {%  for chat_user in all_users %}
+        {% if chat_user.username == active_user %}
+            <li class="contact active" onclick="get_user_box({{ chat_user.id }});">
+        {% else %}
+            <li class="contact" onclick="get_user_box({{ chat_user.id }});">
+        {% endif %}
+                <div class="wrap">
+                    {% if chat_user.msg_count and chat_user.msg_count != 0 %}
+                        <mark style="position: absolute;left: -4px; display:inline-block;line-height:0px;border-radius:50%;border:2px solid #23C552;font-size:8px; color: #fff; background: #23C552;"><p style="display:inline-block;padding-top:50%;padding-bottom:50%;margin-left:3px;margin-right:3px;">
+                            {{chat_user.msg_count}}</p></mark>
+					{% endif %}
+                    <img src="{{ url_for('static',filename='img/'+chat_user.profile_pic) }}" style="height: 40px; width: 40px;" alt="" />
+                    <div class="meta">
+                        <p class="name">{{ chat_user.username }}</p>
+                        <!-- <span class="name" style="position: absolute; top: 0; left: 0; ">{{ chat_user.username }}</span> -->
+                        {% if chat_user.msg_count != 0 %}
+                            <p class="preview">
+                        {% else %}
+                            {% if chat_user.username != active_user %}
+                                <p class="preview" style="color: rgb(150, 175, 250);">
+                            {% else %}  
+                                <p class="preview" style="color: #fff;">
+                            {% endif%}
+                        {% endif%}
+                            {% if chat_user.text|length > 17 %}
+                                {{ chat_user.text[:17] }} ...
+                            {% else %}
+                                {{ chat_user.text }}
+                            {% endif %}
+                            <span style="float: right; margin-right: 60px; font-size: 12px;">
+                                
+                                {{chat_user.time_diff}}
+
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </li>
+        
+    {% endfor %}
+    
+    
+    
+</ul>
