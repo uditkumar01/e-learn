@@ -882,7 +882,7 @@ form.sign-in-form {
                 <option value="school" selected disabled hidden>School</option>
                 <!-- <option value="school1">School 1</option> -->
                 {% for school in all_schools %}
-                  <option value="{{school.first_name|lower}}">{{school.first_name|upper}}</option>
+                  <option value="{{school.school|lower}}">{{school.school|upper}}</option>
                 {% endfor %}
                 
               </select>
