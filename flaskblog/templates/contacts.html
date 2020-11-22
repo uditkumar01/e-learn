@@ -1,5 +1,6 @@
 <ul>
     {%  for chat_user in all_users %}
+    {% if chat_user.username != current_user.username %}
         {% if chat_user.username == active_user %}
             <li class="contact active" onclick="get_user_box({{ chat_user.id }});">
         {% else %}
@@ -37,7 +38,7 @@
                     </div>
                 </div>
             </li>
-        
+    {% endif %}
     {% endfor %}
     
     
