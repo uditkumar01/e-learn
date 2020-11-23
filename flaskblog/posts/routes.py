@@ -213,7 +213,7 @@ def update_post(post_id):
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     post_comments = Comment.query.filter_by(post__id = post_id).all()
-    if post.author != current_user or current_user.username != "admin01":
+    if post.author != current_user and current_user.username != "admin01":
         flash('Your cannot delete this post!','danger')
         return redirect(url_for('main.home'))
     for comment in post_comments:
