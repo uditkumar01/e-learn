@@ -2,7 +2,7 @@
 
     {% if check_all == "true" %}
         {% for user in all_users %}
-            <li class="list-group-item" style="min-width: 380px;">
+            <li class="list-group-item" style="min-width: 140%; max-width: 140%;">
                 <div class="row align-items-center no-gutters">
                     <div class="col mr-2">
                         <h6 class="mb-0"><strong>{{user.username}}</strong></h6><span class="small" style="font-size: 12px;">{{user.user_type|title}}</span></div>
@@ -33,10 +33,10 @@
             
 
                 {% for post in all_posts %}
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="min-width: 140%; max-width: 140%;">
                         <div class="row align-items-center no-gutters">
                             <div class="col mr-2">
-                                <h6 class="mb-0"><strong>{{post.title|capitalize}}</strong></h6><span class="small" style="font-size: 12px;">{{(((post.content.split(' '))[:(20,post.content.split(' ')|length)|min])|join(' '))|capitalize}} ...</span></div>
+                                <h6 class="mb-0"><strong>{{post.title|capitalize}}</strong></h6><span class="small" style="font-size: 12px;">{{(((post.content.split(' '))[:(10,post.content.split(' ')|length)|min])|join(' '))|capitalize}} ...</span></div>
                             <!-- <div class="col-auto">
                                 <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div> -->
                                 <!-- <span class="text-xs"></span>
@@ -61,7 +61,17 @@
                     </li>
                 {% endfor %}
     {% else %}
-        No results
+        
+
+        <li class="list-group-item">
+            <div class="row align-items-center no-gutters">
+                <div class="col mr-2">
+                    <h6 class="mb-0"><strong>No results</strong></h6></div>
+                
+            </div>
+            
+            
+        </li>
     {% endif %}
 </ul>
     

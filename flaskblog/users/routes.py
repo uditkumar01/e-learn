@@ -572,6 +572,16 @@ def get_contacts(user_id,id1):
 
 
 @login_required
+@users.route("/contacts_refresh_mini" , methods = ['GET'])
+def get_mini_contacts():
+
+    search_me = "%"+request.args['data']+"%"
+    all_users = User.query.filter(User.username.ilike(search_me)).all()
+    print(search_me,all_users)
+    return {'page':render_template('mini_chat_search.html',all_users = all_users,time_now = datetime.utcnow())}
+
+
+@login_required
 @users.route("/message_page/<int:user_id>/<int:id1>" , methods = ['GET','POST'])
 def chat_room(user_id,id1):
     if not current_user.is_authenticated:

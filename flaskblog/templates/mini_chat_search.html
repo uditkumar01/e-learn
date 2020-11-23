@@ -1,0 +1,52 @@
+<ul class="list-group list-group-flush">
+
+    {% if all_users %}
+        {% for chat_user in all_users %}
+        {% if chat_user.username != current_user.username %}
+            <li class="list-group-item" style="min-width: 150%; max-width: 150%;">
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2">
+                        <h6 class="mb-0"><strong>{{chat_user.username}}</strong></h6><span class="small" style="font-size: 12px;">{{chat_user.user_type|title}}</span></div>
+                    <!-- <div class="col-auto">
+                        <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div> -->
+                        <!-- <span class="text-xs"></span>
+                    </div> -->
+                    
+                </div>
+                <div class="row align-items-center no-gutters">
+                    <div class="col mr-2 mt-1">
+
+                        <img src="{{ url_for('static',filename='img/'+ chat_user.profile_pic) }}" style="height: 16px; width: 16px;margin-bottom: -5px; border-radius: 50%;">
+                        <span class="text-xs" style="font-size: 10px;"> From {{chat_user.country|title}}</span>
+                        
+                    </div>
+                    <div class="col-auto">
+                        <span class="text-xs" style="font-size: 10px;">
+                            <a class="btn btn-primary btn-sm" style="font-size: 12px; border: 1px solid; padding: 4px; border-radius: 4px; text-decoration: none; cursor: pointer; color: #fff; background: rgb(59,97,209);" onclick="get_user_box({{ chat_user.id }});">Chat</a>
+                        </span>
+                    </div>
+                    
+                </div>
+                
+            </li>
+        {% endif %}
+        {% endfor %}
+                                                
+            
+
+                
+    {% else %}
+        
+
+        <li class="list-group-item">
+            <div class="row align-items-center no-gutters">
+                <div class="col mr-2">
+                    <h6 class="mb-0"><strong>No results</strong></h6></div>
+                
+            </div>
+            
+            
+        </li>
+    {% endif %}
+</ul>
+    

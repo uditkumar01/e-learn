@@ -206,7 +206,7 @@
 
                                         
                                     </form>
-                                    <div class="row" style="z-index: 99; position: absolute; top: 120%; left: 5%; width: 97%; display: none;" id="search_home_frame2">
+                                    <div class="row" style="z-index: 99; position: absolute; top: 120%; left: 5%; max-width: 80%; display: none;" id="search_home_frame2">
                                         <div class="col-lg-12 col-xl-12">
                                             <div class="card shadow mb-4">
                                                 
@@ -1087,6 +1087,7 @@
         }
         else{
             document.getElementById('search_home_frame').style.display = "none";
+            document.getElementById('close-drop').style.color = "transparent";
         }
     }
 
@@ -1119,6 +1120,7 @@
         }
         else{
             document.getElementById('search_home_frame2').style.display = "none";
+            document.getElementById('close-drop2').style.color = "transparent";
         }
     }
     </script>

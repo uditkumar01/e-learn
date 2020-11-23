@@ -1333,7 +1333,37 @@ Website: http://emilcarlsson.se/
 					</div> 
 				</div>
 				<ul class="nav navbar-nav flex-nowrap ml-auto">
-					
+					<li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
+						<div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
+							<form class="form-inline mr-auto navbar-search w-100">
+								<div class="input-group">
+									<input class="bg-light form-control small" style="border-radius: 4px; border-width: 0px; border-bottom: 2px solid rgb(114, 146, 235);" type="text" placeholder="Search users ..." id="search_for-12" onkeyup="search_home2();">
+									<div class="input-group-append">
+										<button class="btn btn-primary py-0 ml-2" style="border-radius: 5px; border-width: 0; color: rgb(114, 146, 235); background: transparent;" type="button">
+											<i class="fas fa-times" style="color: transparent;" onclick="closeit2();" id="close-drop2">
+											</i>
+										</button>
+									</div>
+								</div>
+
+
+								
+							</form>
+							<div class="row" style="z-index: 99; position: absolute; top: 120%; left: 5%; max-width: 80%; display: none;" id="search_home_frame2">
+								<div class="col-lg-12 col-xl-12">
+									<div class="card shadow mb-4">
+										
+										<div class="card-body">
+											
+											
+
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</li>
 					<li class="nav-item dropdown no-arrow mx-1" role="presentation">
 						<div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
 							{% if alerts %}
@@ -1914,9 +1944,42 @@ $("#status-options ul li").click(function() {
 		$(".alert").remove(); 
 		  
   
-		console.log("HHHHH");
+		// console.log("HHHHH");
 	  }, 2000);
 	});
+
+	function closeit2(){
+        document.getElementById('search_home_frame2').style.display = "none";
+        document.getElementById('close-drop2').style.color = "transparent";
+        document.getElementById('search_for-12').value = "";
+    }
+    function search_home2(){
+        
+		var typed_query = document.getElementById('search_for-12').value
+		
+        if(typed_query!=""){
+            $.ajax({
+				url: "/contacts_refresh_mini",
+				type: "GET",
+				data: {'data':typed_query},
+				success: function(response) {
+					
+					console.log(response);
+					document.getElementById('search_home_frame2').style.display = "block";
+					document.getElementById('close-drop2').style.color = "tomato";
+					document.getElementById('search_home_frame2').innerHTML = response.page;
+
+				},
+            error: function(xhr) {
+                //Do Something to handle error
+            }
+            });
+        }
+        else{
+            document.getElementById('search_home_frame2').style.display = "none";
+            document.getElementById('close-drop2').style.color = "transparent";
+        }
+    }
 </script>
 </body>
 
