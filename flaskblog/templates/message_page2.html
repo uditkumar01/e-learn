@@ -12,6 +12,25 @@
     <script src="https://use.typekit.net/hoy3lrg.js"></script>
 	<script>try{Typekit.load({ async: true });}catch(e){}</script>
 
+
+	<link rel="apple-touch-icon" sizes="57x57" href="{{ url_for('static', filename = 'img/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ url_for('static', filename = 'img/favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ url_for('static', filename = 'img/favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename = 'img/favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ url_for('static', filename = 'img/favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ url_for('static', filename = 'img/favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ url_for('static', filename = 'img/favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ url_for('static', filename = 'img/favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename = 'img/favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{ url_for('static', filename = 'img/favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename = 'img/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename = 'img/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename = 'img/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename = 'img/favicon/manifest.json') }}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
 	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 	<style class="cp-pen-styles">
@@ -979,7 +998,7 @@ Website: http://emilcarlsson.se/
 								{% if all_notify %}
 
 									{% for notify in all_notify %}
-										<a class="d-flex align-items-center dropdown-item" href="#" style="position: relative;">
+										<a class="d-flex align-items-center dropdown-item" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}" style="position: relative;">
 											<div class="dropdown-list-image mr-3">
 												
 												<img class="rounded-circle" src="{{ url_for('static',filename='img/'+notify.profile_pic) }}" style="height: 40px; width: 40px;">
@@ -1040,7 +1059,7 @@ Website: http://emilcarlsson.se/
 									<a class="text-center dropdown-item small text-gray-500" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">Show All Messages</a></div>
 								{% else %}
 										
-								<a class="text-center small dropdown-item text-gray-600" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}">No Messages Yet</a></div>
+								<a class="text-center small dropdown-item text-gray-600" href="#">No Messages Yet</a></div>
 								{% endif %}
 								
 								
