@@ -923,11 +923,14 @@ form.sign-in-form {
       <div class="panels-container1">
         <div class="panel left-panel">
           <div class="content">
-            <h3>New here ?</h3>
-            <p>
+            <h3 style="margin-top: -30px;">New here ?</h3>
+            <p style="margin: 0;">
               Want to join us to improve your learning. Cool press the button below. We are waiting . . .
             </p>
-            <button class="btn btn-light" id="sign-up-btn">
+            <a class="btn btn-info btn-sm" href="{{url_for('users.school_register')}}" style="text-decoration: none;padding-top: 12px; width: max-content;">
+              Institution Register
+            </a>
+            <button class="btn btn-light btn-sm mt-n1" id="sign-up-btn">
               Sign up
             </button>
           </div>
@@ -940,12 +943,10 @@ form.sign-in-form {
               Hey, if you have already registered and continue you learning process. Press the below button to proceed.
             </p>
             
-            <button class="btn btn-dark mb-n2" id="sign-in-btn">
+            <button class="btn btn-dark btn-sm" id="sign-in-btn">
               Sign in
             </button>
-            <a class="btn btn-info mb-n2" id="sign-in-btn" href="{{url_for('users.school_register')}}" style="text-decoration: none;padding-top: 12px; width: max-content;">
-              Institution Register
-            </a>
+            
           </div>
           <img src="{{ url_for('static',filename='img/register.svg') }}" class="image" alt="" />
         </div>
