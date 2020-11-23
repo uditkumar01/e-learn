@@ -50,7 +50,7 @@ def like(post_id):
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
         
         if current_user.id != post.author.id:
-            notify = Notify(username = post.author.username, title = "like", text = "Someone liked Your Post", time_am_pm = now_asia.strftime("%I:%M %p"))
+            notify = Notify(username = post.author.username, title = "like", text = "Someone liked Your Post")
             db.session.add(notify)
 
         add_time1 = Timeline(username=current_user.username,title="You liked a Post",text=current_user.username+" liked a post named "+post.title+" at "+now_asia.strftime("%I:%M %p"),time_am_pm = now_asia.strftime("%I:%M %p"))
@@ -87,7 +87,7 @@ def comment_post(post_id):
             now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
             
             if current_user.id != post.author.id:
-                notify = Notify(username = post.author.username, title = "comment", text = "You got a comment", time_am_pm = now_asia.strftime("%I:%M %p"))
+                notify = Notify(username = post.author.username, title = "comment", text = "You got a comment")
                 db.session.add(notify)
 
             add_time1 = Timeline(username=current_user.username,title="You commented a post",text=current_user.username+" commented a post named "+post.title+" at "+now_asia.strftime("%I:%M %p"), time_am_pm = now_asia.strftime("%I:%M %p"))

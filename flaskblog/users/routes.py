@@ -549,7 +549,7 @@ def get_contacts(user_id,id1):
             if user12.get('username') == chat_user.username:
                 check1 = False
                 break 
-        if check1:
+        if check1 and chat_user.id != current_user.id:
             msg_count = Message.query.filter_by(active_user_id = chat_user.id,user_id = current_user1.id,seen="not seen").count()
             all_users.append({ 'username':chat_user.username,'user_type':chat_user.user_type,'text':chat.text,'profile_pic':chat_user.profile_pic,'id':chat_user.id, 'timestamp':chat.timestamp, 'time_diff': pretty_date(chat.timestamp), 'msg_count':msg_count })
     for chat in all_got_messages2:
@@ -563,7 +563,7 @@ def get_contacts(user_id,id1):
             elif all_users[user12].get('username') == chat_user.username:
                 check1 = False
                 break
-        if check1:
+        if check1 and chat_user.id != current_user.id:
             all_users.append({ 'username':chat_user.username,'user_type':chat_user.user_type,'text':chat.text,'profile_pic':chat_user.profile_pic,'id':chat_user.id, 'timestamp':chat.timestamp, 'time_diff': pretty_date(chat.timestamp), 'msg_count':0 })
             print(pretty_date(chat.timestamp))
     all_users.sort(reverse=True, key = lambda x:x.get('timestamp'))
