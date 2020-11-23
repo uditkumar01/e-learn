@@ -6,6 +6,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta, date
 from flaskblog.users.utils import add_profile_pic, send_request_email, set_password_request, remove_profile_pic,add_post_pic,anchorUrl,add_message_pic
 from pytz import timezone
+import random
 
 users = Blueprint('users',__name__)
 
@@ -652,10 +653,12 @@ def chat_room(user_id,id1):
     if all_notify_len > 9:
         all_notify_len = "9+"
 
+    fix_bg_img = ['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][random.randint(0,5)]
+    
     # print("allusers",all_users)
     received_msg_len = Message.query.order_by(Message.timestamp.asc()).filter_by(user_id = current_user.id,active_user_id = user_id).count()
     all_seen_messages_len = Message.query.order_by(Message.timestamp.asc()).filter_by(user_id = user_id,active_user_id = current_user.id, seen = "seen").count()
-    return render_template('message_page2.html', all_users = all_users, user = user, time_now = datetime.utcnow(), received_msg_len = received_msg_len, seen_message_len = all_seen_messages_len, all_notify = all_notify, all_notify_len = all_notify_len, alerts = alerts)
+    return render_template('message_page2.html', all_users = all_users, user = user, time_now = datetime.utcnow(), received_msg_len = received_msg_len, seen_message_len = all_seen_messages_len, all_notify = all_notify, all_notify_len = all_notify_len, alerts = alerts, fix_bg_img = fix_bg_img)
 
 @login_required
 @users.route("/send_pic/<int:user_id>/<string:msg_text>" , methods = ['GET','POST'])

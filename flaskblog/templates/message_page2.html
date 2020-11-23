@@ -35,7 +35,7 @@
 		width: 100vw;
 		height: 100vh;
 		
-		background: url("{{url_for('static',filename='img/chat_wallpapers/'+['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][(range(6)|random)])}}");
+		background: url("{{url_for('static',filename='img/chat_wallpapers/image4.jpg')}}");
 	  }
 	  @media screen and (max-width: 360px) {
 		#frame {
@@ -542,7 +542,7 @@
 		width: 100%;
 		height: 65px;
 		line-height: 60px;
-		background: url("{{url_for('static',filename='img/chat_wallpapers/'+['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][(range(6)|random)])}}");
+		background: url("{{url_for('static',filename='img/chat_wallpapers/image4.jpg')}}");
 	  }
 	  #frame .content .contact-profile img {
 		height: 40px;
@@ -571,7 +571,7 @@
 		height: auto;
 		min-height: calc(100% - 120px);
 		max-height: calc(100% - 120px);
-		background: url("{{url_for('static',filename='img/chat_wallpapers/'+['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][(range(6)|random)])}}");
+		background: url("{{url_for('static',filename='img/chat_wallpapers/image4.jpg')}}");
 		background-attachment:fixed;
 		background-repeat: repeat-y;
 		background-size: cover;

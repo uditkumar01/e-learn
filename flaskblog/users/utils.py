@@ -10,7 +10,7 @@ from flask_mail import Message
 import os
 from datetime import datetime
 from pytz import timezone
-from urlextract import URLExtract
+# from urlextract import URLExtract
 
 def padding(img, expected_size):
     desired_size = expected_size
@@ -41,14 +41,7 @@ def resize_img(img1):
     img.save(img1)
 
 def anchorUrl(text):
-	# extractor = URLExtract()
-	# urls = extractor.find_urls(text)
-	# for link in urls:
-	# 	x1 = text.find(link)
-	# 	y1 = x1+len(link)
-	# 	text = text[:y1]+ "</a>" +text[y1:]
-	# 	text = (text[:x1]+ "<a"+' href="'+link+'" style="text-decoration:none; color: #48dbfb;">' +text[x1:])
-		
+	
 	return text
 
 def remove_profile_pic(pic):
