@@ -654,7 +654,7 @@ def chat_room(user_id,id1):
         all_notify_len = "9+"
 
     fix_bg_img = ['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][random.randint(0,5)]
-    
+    print(fix_bg_img)
     # print("allusers",all_users)
     received_msg_len = Message.query.order_by(Message.timestamp.asc()).filter_by(user_id = current_user.id,active_user_id = user_id).count()
     all_seen_messages_len = Message.query.order_by(Message.timestamp.asc()).filter_by(user_id = user_id,active_user_id = current_user.id, seen = "seen").count()
