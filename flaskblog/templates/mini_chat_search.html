@@ -3,7 +3,7 @@
     {% if all_users %}
         {% for chat_user in all_users %}
         {% if chat_user.username != current_user.username %}
-            <li class="list-group-item" style="min-width: 150%; max-width: 150%;">
+            <li class="list-group-item" style="min-width: 100%; max-width: 100%;">
                 <div class="row align-items-center no-gutters">
                     <div class="col mr-2">
                         <h6 class="mb-0"><strong>{{chat_user.username}}</strong></h6><span class="small" style="font-size: 12px;">{{chat_user.user_type|title}}</span></div>
