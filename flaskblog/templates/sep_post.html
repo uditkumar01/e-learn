@@ -367,12 +367,14 @@
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h6 class="text-primary font-weight-bold m-0">Post by {{post.author.username}}</h6>
-                                <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
-                                    <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
-                                        role="menu">
-                                        <!-- <a class="dropdown-item" role="presentation">&nbsp;Delete Post</a> -->
-                                        <a class="dropdown-item" role="presentation" href="{{url_for('posts.delete_post',post_id = post.id)}}">&nbsp;Delete Post</a></div>
-                                </div>
+                                {% if current_user.id == post.author.id or current_user.username == "admin01" %}
+                                    <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
+                                        <div class="dropdown-menu shadow dropdown-menu-right animated--fade-in"
+                                            role="menu">
+                                            <!-- <a class="dropdown-item" role="presentation">&nbsp;Delete Post</a> -->
+                                            <a class="dropdown-item" role="presentation" href="{{url_for('posts.delete_post',post_id = post.id)}}">&nbsp;Delete Post</a></div>
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="card-body">
                                 
