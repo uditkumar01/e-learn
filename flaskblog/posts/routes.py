@@ -209,17 +209,18 @@ def update_post(post_id):
         return render_template('create_post_dark.html', title = "Update Question", form = form , form_title_webpage = "Edit Question" , button_name = 'Update')
 
 @login_required
-@posts.route("/ask/<int:post_id>/delete" , methods = ['POST'])
+@posts.route("/post/<int:post_id>/delete" , methods = ['POST','GET'])
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     post_comments = Comment.query.filter_by(post__id = post_id).all()
     if current_user.username != "ADMIN01":
         if post.author != current_user:
-            abort(403)
+            flash('Your cannot delete this post!','danger')
+            return redirect(url_for('main.home'))
     for comment in post_comments:
         db.session.delete(comment)
-    if current_user.username == "ADMIN01":
-        send_post_delete_email(post.author,post)
+    # if current_user.username == "ADMIN01":
+    #     send_post_delete_email(post.author,post)
     db.session.delete(post)
     db.session.commit()
     flash('Your question is deleted successfully!','success')
