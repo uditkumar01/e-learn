@@ -10,7 +10,20 @@ from flask_mail import Message
 import os
 from datetime import datetime
 from pytz import timezone
+import base64
+import io
 # from urlextract import URLExtract
+
+def create_image_b64str(pic):
+
+    with open(pic, "rb") as image:
+        b64string = str(base64.b64encode(image.read()).decode("utf-8"))
+    
+    return b64string
+
+def img_exists(pic):
+    profile_pic_path = os.path.join(current_app.root_path,'static/img', pic)
+    return os.path.isfile(profile_pic_path)
 
 def padding(img, expected_size):
     desired_size = expected_size
@@ -68,7 +81,7 @@ def add_post_pic(pic):
         resize_img(profile_pic_path)
     else:
         pic.save(profile_pic_path)
-    return picture_name
+    return [picture_name,create_image_b64str(profile_pic_path)]
 
 
 def add_message_pic(pic):
@@ -88,7 +101,7 @@ def add_message_pic(pic):
         # resize_img(profile_pic_path)
     else:
         pic.save(profile_pic_path)
-    return picture_name
+    return [picture_name,create_image_b64str(profile_pic_path)]
 
 
 
@@ -101,7 +114,7 @@ def add_profile_pic(pic):
     img1 = Image.open(pic)
     img1.thumbnail(size)
     img1.save(profile_pic_path)
-    return picture_name
+    return [picture_name,create_image_b64str(profile_pic_path)]
 
 # def send_request_email(user):
 #     token = user.get_reset_token()

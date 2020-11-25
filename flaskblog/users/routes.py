@@ -4,9 +4,12 @@ from flaskblog import db,bcrypt
 from flaskblog.models import User, Post ,Comment, Todo, Timeline, Message,Notify
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta, date
-from flaskblog.users.utils import add_profile_pic, send_request_email, set_password_request, remove_profile_pic,add_post_pic,anchorUrl,add_message_pic
+from flaskblog.users.utils import add_profile_pic, send_request_email, set_password_request, remove_profile_pic,add_post_pic,anchorUrl,add_message_pic, img_exists
 from pytz import timezone
-import random
+from PIL import Image
+import base64
+import os
+import io
 
 users = Blueprint('users',__name__)
 
@@ -22,7 +25,7 @@ def school_register():
         hashed_pw = bcrypt.generate_password_hash(formr.password.data).decode('utf-8')
         # print(formr.dob.data)
         # dob = formr.dob.data
-        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, school = formr.school_name.data , dob = "NONE", country = formr.country.data, gender = "NONE", user_type = "school")
+        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, school = formr.school_name.data , profile_pic_data = "NO DATA", dob = "NONE", country = formr.country.data, gender = "NONE", user_type = "school")
         # if user.email!=None:
         #     set_password_request(user)
         # else:
@@ -55,7 +58,7 @@ def login():
         hashed_pw = bcrypt.generate_password_hash(formr.password.data).decode('utf-8')
         # print(formr.dob.data)
         # dob = formr.dob.data
-        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, dob = formr.dob.data, country = formr.country.data, gender = request.form.get('gender'), user_type = request.form.get('type'),school = request.form.get('school'))
+        user = User(username = formr.username.data, profile_pic_data = "NO DATA", email = formr.email.data, password = hashed_pw, dob = formr.dob.data, country = formr.country.data, gender = request.form.get('gender'), user_type = request.form.get('type'),school = request.form.get('school'))
         # if user.email!=None:
         #     set_password_request(user)
         # else:
@@ -302,7 +305,9 @@ def delete_user(user_id):
 def update_profile_pic():
     if request.method == "POST":
         # print(request.files['pic_1'])
-        current_user.profile_pic = add_profile_pic(request.files['pic_1'])
+        pic_list = add_profile_pic(request.files['pic_1'])
+        current_user.profile_pic = pic_list[0]
+        current_user.profile_pic_data = pic_list[1]
         db.session.commit()
 
         now_utc = datetime.now(timezone('UTC'))
@@ -581,6 +586,33 @@ def get_mini_contacts():
     print(search_me,all_users)
     return {'page':render_template('mini_chat_search.html',all_users = all_users,time_now = datetime.utcnow())}
 
+@login_required
+@users.route("/notify_refresh" , methods = ['GET'])
+def get_notify_ref():
+    notify = Message.query.filter_by(user_id = current_user.id,seen = "not seen").limit(10).all()
+    
+    all_notify = []
+
+    all_notify_len = Message.query.filter_by(user_id = current_user.id,seen = "not seen").count()
+    if all_notify_len > 9:
+        all_notify_len = "9+"
+
+    for notification1 in notify:
+        notify_user = User.query.get_or_404(notification1.active_user_id)
+        check1 = True
+        for n_user in range(len(all_notify)):
+            if notify_user.username == all_notify[n_user].get('username'):
+                all_notify[n_user]['count'] += 1
+                all_notify[n_user]['text'] = notification1.text
+                check1 = False
+        if check1:
+            all_notify.append({'username':notify_user.username, 'profile_pic':notify_user.profile_pic, 'text':notification1.text, 'timestamp': notification1.timestamp, 'count':1})
+
+    all_notify_len = Message.query.filter_by(user_id = current_user.id,seen = "not seen").count()
+    if all_notify_len > 9:
+        all_notify_len = "9+"
+
+    return {"page":render_template('notifications1.html',all_notify = all_notify,all_notify_len = all_notify_len, time_now = datetime.utcnow())}
 
 @login_required
 @users.route("/message_page/<int:user_id>/<int:id1>" , methods = ['GET','POST'])
@@ -653,18 +685,17 @@ def chat_room(user_id,id1):
     if all_notify_len > 9:
         all_notify_len = "9+"
 
-    fix_bg_img = ['image1.jpg','image2.jpg','image3.jpg','image4.jpg','image5.jpg','image6.jpg'][random.randint(0,5)]
-    print(fix_bg_img)
+    
     # print("allusers",all_users)
     received_msg_len = Message.query.order_by(Message.timestamp.asc()).filter_by(user_id = current_user.id,active_user_id = user_id).count()
     all_seen_messages_len = Message.query.order_by(Message.timestamp.asc()).filter_by(user_id = user_id,active_user_id = current_user.id, seen = "seen").count()
-    return render_template('message_page2.html', all_users = all_users, user = user, time_now = datetime.utcnow(), received_msg_len = received_msg_len, seen_message_len = all_seen_messages_len, all_notify = all_notify, all_notify_len = all_notify_len, alerts = alerts, fix_bg_img = fix_bg_img)
+    return render_template('message_page2.html', all_users = all_users, user = user, time_now = datetime.utcnow(), received_msg_len = received_msg_len, seen_message_len = all_seen_messages_len, all_notify = all_notify, all_notify_len = all_notify_len, alerts = alerts)
 
 @login_required
 @users.route("/send_pic/<int:user_id>/<string:msg_text>" , methods = ['GET','POST'])
 def save_pic(user_id,msg_text):
     
-    user = User.query.get_or_404(user_id)
+    # user = User.query.get_or_404(user_id)
     if request.method == "POST":
         
         message_text = anchorUrl(msg_text)
@@ -674,7 +705,7 @@ def save_pic(user_id,msg_text):
         now_utc = datetime.now(timezone('UTC'))
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
         
-        message1 = Message(user_id = user_id, active_user_id = current_user.id, text = message_text,pic_1 = pic_1, time_am_pm = now_asia.strftime("%I:%M %p"))
+        message1 = Message(user_id = user_id, active_user_id = current_user.id, text = message_text,pic_1 = pic_1[0], pic_1_data = pic_1[1], time_am_pm = now_asia.strftime("%I:%M %p"))
         db.session.add(message1)
         db.session.commit()
     
@@ -777,9 +808,23 @@ def get_user_chat(user_id):
     # print(all_recieved_messages,"chat_box", user_id, current_user.id, received_msg_len)
     all_messages = []
     for chat in all_my_messages:
+        if chat.pic_1!="NO IMAGE" and not img_exists(chat.pic_1):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(chat.pic_1_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),chat.pic_1)
+
+            pilimage.save(pic_path)
         all_messages.append({'active_user_id':chat.active_user_id, 'text':chat.text,'timestamp': chat.timestamp,'id':chat.id,'time_am_pm': chat.time_am_pm,'user_id': chat.user_id,'seen':chat.seen,'pic_1':chat.pic_1})
     for chat in all_recieved_messages:
         chat.seen = "seen"
+        if chat.pic_1!="NO IMAGE" and not img_exists(chat.pic_1):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(chat.pic_1_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),chat.pic_1)
+        
+            pilimage.save(pic_path)
         all_messages.append({'active_user_id':chat.active_user_id, 'text':chat.text,'timestamp': chat.timestamp,'id':chat.id,'time_am_pm': chat.time_am_pm,'user_id': chat.user_id,'pic_1':chat.pic_1})
     db.session.commit()
     all_messages.sort(reverse=False, key = lambda x:x.get('timestamp'))

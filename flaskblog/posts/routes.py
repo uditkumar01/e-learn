@@ -4,9 +4,13 @@ from flaskblog import db
 from flaskblog.models import Post,Comment,User,Post_like,Todo,Timeline, Notify,Message
 from flaskblog.posts.forms import Post_form, Comment_form
 from datetime import datetime
-from flaskblog.users.utils import send_post_delete_email,add_post_pic
+from flaskblog.users.utils import send_post_delete_email,add_post_pic,img_exists
 from datetime import datetime
 from pytz import timezone
+import io
+from PIL import Image
+import base64
+import os
 
 posts = Blueprint('posts',__name__)
 
@@ -50,7 +54,7 @@ def like(post_id):
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
         
         if current_user.id != post.author.id:
-            notify = Notify(username = post.author.username, title = "like", text = "Someone liked Your Post")
+            notify = Notify(username = post.author.username, title = "comment", text = "You got a comment", post_id = post_id)
             db.session.add(notify)
 
         add_time1 = Timeline(username=current_user.username,title="You liked a Post",text=current_user.username+" liked a post named "+post.title+" at "+now_asia.strftime("%I:%M %p"),time_am_pm = now_asia.strftime("%I:%M %p"))
@@ -87,7 +91,7 @@ def comment_post(post_id):
             now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
             
             if current_user.id != post.author.id:
-                notify = Notify(username = post.author.username, title = "comment", text = "You got a comment")
+                notify = Notify(username = post.author.username, title = "comment", text = "You got a comment", post_id = post_id)
                 db.session.add(notify)
 
             add_time1 = Timeline(username=current_user.username,title="You commented a post",text=current_user.username+" commented a post named "+post.title+" at "+now_asia.strftime("%I:%M %p"), time_am_pm = now_asia.strftime("%I:%M %p"))
@@ -144,6 +148,30 @@ def post(post_id):
     all_notify_len = Message.query.filter_by(user_id = current_user.id,seen = "not seen").count()
     if all_notify_len > 9:
         all_notify_len = "9+"
+    
+    if post.pic_1!="NO IMAGE" and not img_exists(post.pic_1):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(post.pic_1_data))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_1)
+
+        pilimage.save(pic_path)
+        
+    if post.pic_2!="NO IMAGE" and not img_exists(post.pic_2):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(post.pic_2_data))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_2)
+
+        pilimage.save(pic_path)
+
+    if post.pic_3!="NO IMAGE" and not img_exists(post.pic_3):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(post.pic_3_data))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_3)
+
+        pilimage.save(pic_path)
 
     if current_user.is_authenticated:
         

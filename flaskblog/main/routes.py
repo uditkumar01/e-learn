@@ -4,8 +4,12 @@ from datetime import datetime
 from flask_login import current_user
 from flaskblog.posts.forms import Post_form
 from flaskblog import db
-from flaskblog.users.utils import add_post_pic
+from flaskblog.users.utils import add_post_pic, img_exists
 from pytz import timezone
+import io
+from PIL import Image
+import base64
+import os
 
 main = Blueprint('main',__name__)
 
@@ -31,18 +35,19 @@ def home():
             post_imgs.append(add_post_pic(post_form.pic_2.data))
         if post_form.pic_3.data:
             post_imgs.append(add_post_pic(post_form.pic_3.data))
-        print(len(post_imgs),post_imgs)
 
         post_type = request.form['post_type']
         if post_type == "local":
             post_type = current_user.school
 
+        
+
         if len(post_imgs) == 3:
-            post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data,pic_1 = post_imgs[0],pic_2 = post_imgs[1],pic_3 = post_imgs[2], author = current_user)
+            post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data,pic_1 = post_imgs[0][0], pic_1_data = post_imgs[0][1],pic_2 = post_imgs[1][0], pic_2_data = post_imgs[1][1],pic_3 = post_imgs[2][0], pic_3_data = post_imgs[2][1], author = current_user)
         elif len(post_imgs) == 2:
-            post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data,pic_1 = post_imgs[0],pic_2 = post_imgs[1], author = current_user)
+            post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data, pic_1 = post_imgs[0][0], pic_1_data = post_imgs[0][1],pic_2 = post_imgs[1][0], pic_2_data = post_imgs[1][1], author = current_user)
         elif len(post_imgs) == 1:
-            post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data,pic_1 = post_imgs[0], author = current_user)
+            post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data,pic_1 = post_imgs[0][0], pic_1_data = post_imgs[0][1], author = current_user)
         else:
             post = Post(title = post_form.post_title.data,post_type = post_type, content = post_form.content.data, author = current_user)
 
@@ -84,6 +89,33 @@ def home():
         no_of_likes = len(Post_like.query.filter_by(post_id = post.id).all())
         no_of_comments = len(Comment.query.filter_by(post__id = post.id).all())
         
+        # checking deleted post pics begin
+        if post.pic_1!="NO IMAGE" and not img_exists(post.pic_1):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.pic_1_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_1)
+
+            pilimage.save(pic_path)
+        
+        if post.pic_2!="NO IMAGE" and not img_exists(post.pic_2):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.pic_2_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_2)
+
+            pilimage.save(pic_path)
+
+        if post.pic_3!="NO IMAGE" and not img_exists(post.pic_3):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.pic_3_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_3)
+
+            pilimage.save(pic_path)
+
+
+
         posts_with_like_count.append({'id':post.id ,'username':post.author.username,'post_profile_pic':post.author.profile_pic,'user_type':post.author.user_type,'post_title':post.title,'date_posted':post.date_posted,'pic_1':post.pic_1,'pic_2':post.pic_2,'pic_3':post.pic_3,'like_status':like_status,'no_of_likes':no_of_likes,'no_of_comments':no_of_comments,'comment_status':comment_status, })
     # all_like_users = []
     # all_chat_users = []
@@ -97,6 +129,18 @@ def home():
     # for comment in all_his_comments:
     #     post = Post.query.get_or_404(comment.post_id)
     #     all_his_comment_users.append([post.author,comment.post__id])
+
+
+    # img_exists(current_user.profile_pic,current_user.profile_pic_data)
+
+    if not img_exists(current_user.profile_pic):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(current_user.profile_pic_data))
+        print(type(f))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),current_user.profile_pic)
+
+        pilimage.save(pic_path)
 
     alerts = Notify.query.filter_by(username = current_user.username).limit(5).all()
 

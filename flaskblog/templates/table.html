@@ -187,7 +187,7 @@
                                         {% if all_notify %}
 
                                             {% for notify in all_notify %}
-                                                <a class="d-flex align-items-center dropdown-item" href="#" style="position: relative;">
+                                                <a class="d-flex align-items-center dropdown-item" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}" style="position: relative;">
                                                     <div class="dropdown-list-image mr-3">
                                                         
                                                         <img class="rounded-circle" src="{{ url_for('static',filename='img/'+notify.profile_pic) }}" style="height: 40px; width: 40px;">

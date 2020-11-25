@@ -985,7 +985,7 @@ Website: http://emilcarlsson.se/
 								<!-- <a class="text-center dropdown-item small text-gray-500" href="#">Show All Alerts</a></div> -->
 						</div>
 					</li>
-					<li class="nav-item dropdown no-arrow mx-1" role="presentation">
+					<li class="nav-item dropdown no-arrow mx-1" role="presentation" id="message_inbox_frame">
 						<div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#">
 							<i class="fas fa-envelope fa-fw"></i>
 							{% if all_notify_len %}
@@ -1025,32 +1025,32 @@ Website: http://emilcarlsson.se/
 													</span>
 												</span></div>
 												<p class="small text-gray-500 mb-0">{{notify.username}} - 
-													{% if (((time_now-notify.timestamp)|string).split(', '))[0] %}
-											{% if ((((time_now-notify.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
-												{% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
-													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
-												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
-													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
-												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
-													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
-												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
-													just now
-												{%endif%}
+											{% if (((time_now-notify.timestamp)|string).split(', '))[0] %}
+												{% if ((((time_now-notify.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
+													{% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
+														{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
+													{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
+														{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
+													{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
+														{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
+													{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+														just now
+													{%endif%}
 											
-											{% else %}
-												{% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
-													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
-												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
-													{% if  (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
-														(((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
-													{% else %}
-														(((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
-													{% endif %}
-												{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
-													{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+												{% else %}
+													{% if ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
+														{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
+													{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
+														{% if  (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
+															(((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+														{% else %}
+															(((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+														{% endif %}
+													{% elif ((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
+														{{ (((((((time_now-notify.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
+													{%endif%}
 												{%endif%}
-											{%endif%}
-										{%endif%} 
+											{%endif%} 
 												</p>
 											</div>
 										</a>
@@ -1392,6 +1392,25 @@ $("#status-options ul li").click(function() {
 			}
 
 
+			function notify_refresh_fun(){
+
+						
+			
+				$.ajax({
+				url: "/notify_refresh",
+				type: "GET",
+				data: {'user_id':global_user_id},
+				success: function(response) {
+
+					document.getElementById('message_inbox_frame').innerHTML = response.page;
+				},
+				error: function(xhr) {
+					//Do Something to handle error
+				}
+				});
+		}
+
+
 		function received_msg_refresh(id){
 
 						
@@ -1423,6 +1442,7 @@ $("#status-options ul li").click(function() {
 				
 				console.log(response);
 				document.getElementById('contacts').innerHTML = response.page;
+				notify_refresh_fun();
 				
 			},
 			error: function(xhr) {
@@ -1485,6 +1505,8 @@ $("#status-options ul li").click(function() {
 
 		}
 		setInterval(function(){check_change();}, 2000);
+
+		
 		
 	//     window.onload = function exampleFunction() { 
 		
