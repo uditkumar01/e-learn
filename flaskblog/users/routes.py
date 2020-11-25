@@ -25,7 +25,7 @@ def school_register():
         hashed_pw = bcrypt.generate_password_hash(formr.password.data).decode('utf-8')
         # print(formr.dob.data)
         # dob = formr.dob.data
-        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, school = formr.school_name.data , profile_pic_data = "NO DATA", dob = "NONE", country = formr.country.data, gender = "NONE", user_type = "school")
+        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, school = formr.school_name.data , profile_pic_data = "NO IMAGE", dob = "NONE", country = formr.country.data, gender = "NONE", user_type = "school")
         # if user.email!=None:
         #     set_password_request(user)
         # else:
@@ -58,7 +58,7 @@ def login():
         hashed_pw = bcrypt.generate_password_hash(formr.password.data).decode('utf-8')
         # print(formr.dob.data)
         # dob = formr.dob.data
-        user = User(username = formr.username.data, profile_pic_data = "NO DATA", email = formr.email.data, password = hashed_pw, dob = formr.dob.data, country = formr.country.data, gender = request.form.get('gender'), user_type = request.form.get('type'),school = request.form.get('school'))
+        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, dob = formr.dob.data, country = formr.country.data,profile_pic_data = "NO IMAGE", gender = request.form.get('gender'), user_type = request.form.get('type'),school = request.form.get('school'))
         # if user.email!=None:
         #     set_password_request(user)
         # else:
