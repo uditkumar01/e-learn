@@ -172,6 +172,11 @@ def post(post_id):
         pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_3)
 
         pilimage.save(pic_path)
+    
+    all_notify = Notify.query.filter_by(post_id = post_id).all()
+    for notify in all_notify:
+        db.session.delete(notify)
+    db.session.commit()
 
     if current_user.is_authenticated:
         
