@@ -25,7 +25,7 @@ def school_register():
         hashed_pw = bcrypt.generate_password_hash(formr.password.data).decode('utf-8')
         # print(formr.dob.data)
         # dob = formr.dob.data
-        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, school = formr.school_name.data , profile_pic_data = "NO IMAGE", dob = "NONE", country = formr.country.data, gender = "NONE", user_type = "school")
+        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, school = formr.school_name.data , dob = "NONE", country = formr.country.data, gender = "NONE", user_type = "school")
         # if user.email!=None:
         #     set_password_request(user)
         # else:
@@ -58,7 +58,7 @@ def login():
         hashed_pw = bcrypt.generate_password_hash(formr.password.data).decode('utf-8')
         # print(formr.dob.data)
         # dob = formr.dob.data
-        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, dob = formr.dob.data, country = formr.country.data,profile_pic_data = "NO IMAGE", gender = request.form.get('gender'), user_type = request.form.get('type'),school = request.form.get('school'))
+        user = User(username = formr.username.data, email = formr.email.data, password = hashed_pw, dob = formr.dob.data, country = formr.country.data, gender = request.form.get('gender'), user_type = request.form.get('type'),school = request.form.get('school'))
         # if user.email!=None:
         #     set_password_request(user)
         # else:
@@ -306,8 +306,7 @@ def update_profile_pic():
     if request.method == "POST":
         # print(request.files['pic_1'])
         pic_list = add_profile_pic(request.files['pic_1'])
-        current_user.profile_pic = pic_list[0]
-        current_user.profile_pic_data = pic_list[1]
+        current_user.profile_pic = pic_list
         db.session.commit()
 
         now_utc = datetime.now(timezone('UTC'))
@@ -339,14 +338,7 @@ def account(username):
         return redirect(url_for('users.login'))
     update_form = Update_Form()
     user = User.query.filter_by(username = username).first()
-    if not img_exists(user.profile_pic):
-        print("not exists")
-        f = io.BytesIO(base64.b64decode(user.profile_pic_data))
-        print(type(f))
-        pilimage = Image.open(f)
-        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),user.profile_pic)
-
-        pilimage.save(pic_path)
+    
     recent_posts = None
     if user.id != current_user.id:
         recent_posts = Post.query.order_by(Post.date_posted.desc()).filter_by(user_id = user.id).limit(6).all()
@@ -713,7 +705,7 @@ def save_pic(user_id,msg_text):
         now_utc = datetime.now(timezone('UTC'))
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
         
-        message1 = Message(user_id = user_id, active_user_id = current_user.id, text = message_text,pic_1 = pic_1[0], pic_1_data = pic_1[1], time_am_pm = now_asia.strftime("%I:%M %p"))
+        message1 = Message(user_id = user_id, active_user_id = current_user.id, text = message_text,pic_1 = pic_1, time_am_pm = now_asia.strftime("%I:%M %p"))
         db.session.add(message1)
         db.session.commit()
     
@@ -816,23 +808,11 @@ def get_user_chat(user_id):
     # print(all_recieved_messages,"chat_box", user_id, current_user.id, received_msg_len)
     all_messages = []
     for chat in all_my_messages:
-        if chat.pic_1!="NO IMAGE" and not img_exists(chat.pic_1):
-            print("not exists")
-            f = io.BytesIO(base64.b64decode(chat.pic_1_data))
-            pilimage = Image.open(f)
-            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),chat.pic_1)
-
-            pilimage.save(pic_path)
+        
         all_messages.append({'active_user_id':chat.active_user_id, 'text':chat.text,'timestamp': chat.timestamp,'id':chat.id,'time_am_pm': chat.time_am_pm,'user_id': chat.user_id,'seen':chat.seen,'pic_1':chat.pic_1})
     for chat in all_recieved_messages:
         chat.seen = "seen"
-        if chat.pic_1!="NO IMAGE" and not img_exists(chat.pic_1):
-            print("not exists")
-            f = io.BytesIO(base64.b64decode(chat.pic_1_data))
-            pilimage = Image.open(f)
-            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),chat.pic_1)
         
-            pilimage.save(pic_path)
         all_messages.append({'active_user_id':chat.active_user_id, 'text':chat.text,'timestamp': chat.timestamp,'id':chat.id,'time_am_pm': chat.time_am_pm,'user_id': chat.user_id,'pic_1':chat.pic_1})
     db.session.commit()
     all_messages.sort(reverse=False, key = lambda x:x.get('timestamp'))

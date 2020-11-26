@@ -149,29 +149,6 @@ def post(post_id):
     if all_notify_len > 9:
         all_notify_len = "9+"
     
-    if post.pic_1!="NO IMAGE" and not img_exists(post.pic_1):
-        print("not exists")
-        f = io.BytesIO(base64.b64decode(post.pic_1_data))
-        pilimage = Image.open(f)
-        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_1)
-
-        pilimage.save(pic_path)
-        
-    if post.pic_2!="NO IMAGE" and not img_exists(post.pic_2):
-        print("not exists")
-        f = io.BytesIO(base64.b64decode(post.pic_2_data))
-        pilimage = Image.open(f)
-        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_2)
-
-        pilimage.save(pic_path)
-
-    if post.pic_3!="NO IMAGE" and not img_exists(post.pic_3):
-        print("not exists")
-        f = io.BytesIO(base64.b64decode(post.pic_3_data))
-        pilimage = Image.open(f)
-        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_3)
-
-        pilimage.save(pic_path)
     
     all_notify = Notify.query.filter_by(post_id = post_id).all()
     for notify in all_notify:
