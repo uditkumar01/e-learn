@@ -81,7 +81,7 @@ def add_post_pic(pic):
         resize_img(profile_pic_path)
     else:
         pic.save(profile_pic_path)
-    return [picture_name,create_image_b64str(profile_pic_path)]
+    return [picture_name,"NO IMAGE"]
 
 
 def add_message_pic(pic):
@@ -101,7 +101,7 @@ def add_message_pic(pic):
         # resize_img(profile_pic_path)
     else:
         pic.save(profile_pic_path)
-    return [picture_name,create_image_b64str(profile_pic_path)]
+    return [picture_name,"NO IMAGE"]
 
 
 
@@ -114,7 +114,7 @@ def add_profile_pic(pic):
     img1 = Image.open(pic)
     img1.thumbnail(size)
     img1.save(profile_pic_path)
-    return [picture_name,create_image_b64str(profile_pic_path)]
+    return [picture_name,"NO IMAGE"]
 
 # def send_request_email(user):
 #     token = user.get_reset_token()
