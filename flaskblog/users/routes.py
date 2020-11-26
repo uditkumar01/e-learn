@@ -339,6 +339,14 @@ def account(username):
         return redirect(url_for('users.login'))
     update_form = Update_Form()
     user = User.query.filter_by(username = username).first()
+    if not img_exists(user.profile_pic):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(user.profile_pic_data))
+        print(type(f))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),user.profile_pic)
+
+        pilimage.save(pic_path)
     recent_posts = None
     if user.id != current_user.id:
         recent_posts = Post.query.order_by(Post.date_posted.desc()).filter_by(user_id = user.id).limit(6).all()

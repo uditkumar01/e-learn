@@ -153,7 +153,7 @@
 
                                         {% if alerts %}
                                             {% for alert in alerts %}
-                                                <a class="d-flex align-items-center dropdown-item" href="#">
+                                                <a class="d-flex align-items-center dropdown-item" href="{{url_for('posts.post', post_id = alert.id)}}">
                                                     <div class="mr-3">
                                                         {% if alert.title == "like" %}
                                                             <div class="bg-danger icon-circle"><i class="fas fa-heart text-white"></i></div>

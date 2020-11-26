@@ -113,6 +113,15 @@ def home():
             pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_3)
 
             pilimage.save(pic_path)
+        
+        if not img_exists(post.author.profile_pic):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.author.profile_pic_data))
+            print(type(f))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.author.profile_pic)
+
+            pilimage.save(pic_path)
 
 
 
@@ -151,6 +160,14 @@ def home():
 
     for notification1 in notify:
         notify_user = User.query.get_or_404(notification1.active_user_id)
+        if not img_exists(notify_user.profile_pic):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(notify_user.profile_pic_data))
+            print(type(f))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),notify_user.profile_pic)
+
+            pilimage.save(pic_path)
         check1 = True
         for n_user in range(len(all_notify)):
             if notify_user.username == all_notify[n_user].get('username'):
@@ -181,6 +198,15 @@ def local():
         # return render_template("index.html")
         return redirect(url_for('users.login'))
     print("post form", post_form.validate_on_submit(), request.method)
+
+    if not img_exists(current_user.profile_pic):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(current_user.profile_pic_data))
+        print(type(f))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),current_user.profile_pic)
+
+        pilimage.save(pic_path)
 
     if request.method == "POST" and post_form.validate_on_submit():
         
@@ -233,6 +259,41 @@ def local():
     for post in posts.items:
         user_exist = Post_like.query.filter_by(post_id = post.id,user_id = current_user.id).first()
         print(post,user_exist)
+        
+        # begin check
+        if post.pic_1!="NO IMAGE" and not img_exists(post.pic_1):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.pic_1_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_1)
+
+            pilimage.save(pic_path)
+        
+        if post.pic_2!="NO IMAGE" and not img_exists(post.pic_2):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.pic_2_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_2)
+
+            pilimage.save(pic_path)
+
+        if post.pic_3!="NO IMAGE" and not img_exists(post.pic_3):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.pic_3_data))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.pic_3)
+
+            pilimage.save(pic_path)
+
+        if not img_exists(post.author.profile_pic):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(post.author.profile_pic_data))
+            print(type(f))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),post.author.profile_pic)
+
+            pilimage.save(pic_path)
+        # end check
         like_status = "false"
         comment_status = "false"
         if user_exist:
@@ -269,6 +330,14 @@ def local():
 
     for notification1 in notify:
         notify_user = User.query.get_or_404(notification1.active_user_id)
+        if not img_exists(notify_user.profile_pic):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(notify_user.profile_pic_data))
+            print(type(f))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),notify_user.profile_pic)
+
+            pilimage.save(pic_path)
         check1 = True
         for n_user in range(len(all_notify)):
             if notify_user.username == all_notify[n_user].get('username'):
@@ -296,7 +365,23 @@ def users_table():
     school_users = User.query.filter(User.school.ilike(current_user.school)).filter(User.user_type!="school").paginate(page = page_no,per_page = 10)
     school_users_count = User.query.filter(User.school.ilike(current_user.school)).filter(User.user_type!="school").count()
     all_school_users = []
+    if not img_exists(current_user.profile_pic):
+        print("not exists")
+        f = io.BytesIO(base64.b64decode(current_user.profile_pic_data))
+        print(type(f))
+        pilimage = Image.open(f)
+        pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),current_user.profile_pic)
+
+        pilimage.save(pic_path)
     for user1 in school_users.items:
+        if not img_exists(user1.profile_pic):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(user1.profile_pic_data))
+            print(type(f))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),user1.profile_pic)
+
+            pilimage.save(pic_path)
         post_count = Post.query.filter_by(user_id = current_user.id).count()
         all_school_users.append({"username":user1.username, "profile_pic":user1.profile_pic,"country":user1.country,"user_type":user1.user_type,"email":user1.email,"dob":user1.dob,"post_count":post_count})
 
@@ -332,6 +417,14 @@ def school_srh():
     school_users_count = User.query.filter(User.school.ilike(current_user.school)).filter(User.user_type!="school").filter(User.username.ilike(search_me)).count()
     all_school_users = []
     for user1 in school_users.items:
+        if not img_exists(user1.profile_pic):
+            print("not exists")
+            f = io.BytesIO(base64.b64decode(user1.profile_pic_data))
+            print(type(f))
+            pilimage = Image.open(f)
+            pic_path = os.path.join(os.path.join(os.path.join(os.path.join(os.getcwd(),"flaskblog"), "static"),"img"),user1.profile_pic)
+
+            pilimage.save(pic_path)
         post_count = Post.query.filter_by(user_id = current_user.id).count()
         all_school_users.append({"username":user1.username, "profile_pic":user1.profile_pic,"country":user1.country,"user_type":user1.user_type,"email":user1.email,"dob":user1.dob,"post_count":post_count})
     return render_template('table_search.html',all_school_users = all_school_users, school_users = school_users, school_users_count = school_users_count)

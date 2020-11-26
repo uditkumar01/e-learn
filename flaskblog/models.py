@@ -24,7 +24,7 @@ class User(db.Model,UserMixin):
     email = db.Column(db.String(150), unique = True, nullable = False)
     password = db.Column(db.String(60), nullable = False)
     profile_pic = db.Column(db.String(100), nullable = False, default = "default_profile_pic.jpg")
-    profile_pic_data = db.Column(db.String(10485759), default = "default_profile_pic")
+    profile_pic_data = db.Column(db.String(10485759), default = "NO IMAGE")
     gender = db.Column(db.String(15),nullable = False, default  = "NULL")
     dob = db.Column(db.String(30),nullable = False, default  = "NULL")
     facebook_link = db.Column(db.String(100), nullable = False, default = "https://facebook.com")
@@ -132,7 +132,7 @@ class Notify(db.Model):
     username = db.Column(db.String(30), nullable = False)
     title = db.Column(db.String(10000), nullable = False)
     text = db.Column(db.String(10000), nullable = False)
-    post_id = db.Column(db.String(1000),nullable = False)
+    post_id = db.Column(db.Integer, nullable = False)
     timestamp = db.Column(db.DateTime, nullable = False, default = datetime.utcnow)
 
     def __repr__(self):

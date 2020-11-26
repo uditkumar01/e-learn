@@ -246,7 +246,7 @@
 
                                         {% if alerts %}
                                             {% for alert in alerts %}
-                                                <a class="d-flex align-items-center dropdown-item" href="#">
+                                                <a class="d-flex align-items-center dropdown-item" href="{{url_for('posts.post', post_id = alert.id)}}">
                                                     <div class="mr-3">
                                                         {% if alert.title == "like" %}
                                                             <div class="bg-danger icon-circle"><i class="fas fa-heart text-white"></i></div>
@@ -277,7 +277,7 @@
                                     <div class="dropdown-menu dropdown-menu-right dropdown-list dropdown-menu-right animated--grow-in"
                                         role="menu">
                                         <h6 class="dropdown-header">Message Inbox</h6>
-                                        {% if all_notify %}
+                                        {% if all_notify_len %}
 
                                             {% for notify in all_notify %}
                                                 <a class="d-flex align-items-center dropdown-item" href="{{url_for('users.chat_room',user_id = current_user.id, id1 = current_user.id)}}" style="position: relative;">
