@@ -19,9 +19,9 @@ main = Blueprint('main',__name__)
 def home():
     post_form = Post_form()
 
-    if not (current_user.is_authenticated):
-        # return render_template("index.html")
-        return redirect(url_for('users.login'))
+    # if not (current_user.is_authenticated):
+    #     # return render_template("index.html")
+    #     return redirect(url_for('users.login'))
     print("post form", post_form.validate_on_submit(), request.method)
 
     if request.method == "POST" and post_form.validate_on_submit():
