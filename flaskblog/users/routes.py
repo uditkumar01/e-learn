@@ -4,7 +4,7 @@ from flaskblog import db,bcrypt
 from flaskblog.models import User, Post ,Comment, Todo, Timeline, Message,Notify
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import datetime, timedelta, date
-from flaskblog.users.utils import add_profile_pic, send_request_email, set_password_request, remove_profile_pic,add_post_pic,anchorUrl,add_message_pic, img_exists
+from flaskblog.users.utils import add_profile_pic, send_request_email, set_password_request, remove_profile_pic,add_post_pic,anchorUrl,add_message_pic, img_exists, pretty_date
 from pytz import timezone
 from PIL import Image
 import base64
@@ -489,39 +489,7 @@ def chat_del(chat_id,user_id):
         flash('Deleted !','success')
     return redirect(url_for('users.chat_room',user_id = user_id))
 
-def pretty_date(time=False):
-    
-    now = datetime.utcnow()
-    diff = now - time
-    second_diff = diff.seconds
-    day_diff = diff.days
-    print(diff)
 
-    if day_diff < 0:
-        return ''
-
-    if day_diff == 0:
-        if second_diff < 10:
-            return "just now"
-        if second_diff < 60:
-            return str(round(second_diff)) + " sec ago"
-        if second_diff < 120:
-            return "a min ago"
-        if second_diff < 3600:
-            return str(round(second_diff / 60)) + " mins ago"
-        if second_diff < 7200:
-            return "an hr ago"
-        if second_diff < 86400:
-            return str(round(second_diff / 3600))+ " hrs ago"
-    if day_diff == 1:
-        return "yesterday"
-    if day_diff < 7:
-        return str(round(day_diff)) + " days ago"
-    if day_diff < 31:
-        return str(round(day_diff / 7)) + " weeks ago"
-    if day_diff < 365:
-        return str(round(day_diff / 30)) + " months ago"
-    return str(round(day_diff / 365)) + " yrs ago"
 
 @login_required
 @users.route("/contacts_search/<int:id1>" , methods = ['GET'])

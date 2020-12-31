@@ -12,7 +12,43 @@ from datetime import datetime
 from pytz import timezone
 import base64
 import io
+# from pytz import timezone
 # from urlextract import URLExtract
+
+
+def pretty_date(time=False):
+    
+    now = datetime.utcnow()
+    diff = now - time
+    second_diff = diff.seconds
+    day_diff = diff.days
+    print(diff)
+
+    if day_diff < 0:
+        return ''
+
+    if day_diff == 0:
+        if second_diff < 10:
+            return "just now"
+        if second_diff < 60:
+            return str(round(second_diff)) + " sec ago"
+        if second_diff < 120:
+            return "a min ago"
+        if second_diff < 3600:
+            return str(round(second_diff / 60)) + " mins ago"
+        if second_diff < 7200:
+            return "an hr ago"
+        if second_diff < 86400:
+            return str(round(second_diff / 3600))+ " hrs ago"
+    if day_diff == 1:
+        return "yesterday"
+    if day_diff < 7:
+        return str(round(day_diff)) + " days ago"
+    if day_diff < 31:
+        return str(round(day_diff / 7)) + " weeks ago"
+    if day_diff < 365:
+        return str(round(day_diff / 30)) + " months ago"
+    return str(round(day_diff / 365)) + " yrs ago"
 
 def create_image_b64str(pic):
 

@@ -447,32 +447,31 @@
                                             <a class="post-body" href="{{url_for('posts.post', post_id = post.id)}}"><p class="card-text" style="padding-bottom: 15px; padding-top: 10px; font-weight:normal;">{{post.post_title}}</p></a>
                                         
                                             <span class="card-text"><small class="text-muted">
-                                                {% if (((time_now-post.date_posted)|string).split(', '))[0] %}
-                                                    {% if ((((time_now-post.date_posted)|string).split(', '))[0]).split(':')|length > 1 %}
-                                                        {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                                {% if (((time_now-post.date_posted)|string).split(", "))|length == 1 %}
+                                                        <!-- time -->
+                                                        {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int }} hr ago
+                                                        {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int }} min ago
+                                                        {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[2]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[2]|int }} secs ago
+                                                        {% else %}
                                                             just now
-                                                        {%endif%}
-                                                    
-                                                    {% else %}
-                                                        {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
-                                                            {% if  (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
-                                                                (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                        {% endif %}
+                                                        <!-- end -->
+                                                    {% elif (((time_now-post.date_posted)|string).split(", "))|length == 2 %}
+                                                        {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0]|int < 365 %}
+                                                            <!-- month -->
+                                                            {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0]|int < 30 %}
+                                                                {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0] }} d ago
                                                             {% else %}
-                                                                (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                                {{ (((((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0])|int)//30 }} mon ago
                                                             {% endif %}
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
-                                                        {%endif%}
-                                                    {%endif%}
-                                                {%endif%} 
+                                                            <!-- end -->
+                                                        {% else %}
+                                                            {{ (((((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0])|int)//365 }} yrs ago
+                                                        {% endif %}
+                                                    {% endif %}
                                             </small></span>
                                             <span class="card-text" style="float: right;">
                                                 {% if post.like_status == "true" %}

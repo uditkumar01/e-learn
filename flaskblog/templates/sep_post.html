@@ -447,32 +447,32 @@
                                                     {%endif%}
                                                 </span><br/>
                                                 <span class="card-text"><small class="text-muted">
-                                                    {% if (((time_now-post.date_posted)|string).split(', '))[0] %}
-                                                        {% if ((((time_now-post.date_posted)|string).split(', '))[0]).split(':')|length > 1 %}
-                                                            {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
-                                                                {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
-                                                            {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
-                                                                {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
-                                                            {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
-                                                                {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
-                                                            {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
-                                                                just now
-                                                            {%endif%}
-                                                        
+                                                    {% if (((time_now-post.date_posted)|string).split(", "))|length == 1 %}
+                                                        <!-- time -->
+                                                        {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int }} hr ago
+                                                        {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int }} min ago
+                                                        {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[2]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[2]|int }} secs ago
                                                         {% else %}
-                                                            {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
-                                                                {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
-                                                            {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
-                                                                {% if  (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
-                                                                    (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
-                                                                {% else %}
-                                                                    (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
-                                                                {% endif %}
-                                                            {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
-                                                                {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
-                                                            {%endif%}
-                                                        {%endif%}
-                                                    {%endif%} 
+                                                            just now
+                                                        {% endif %}
+                                                        <!-- end -->
+                                                    {% elif (((time_now-post.date_posted)|string).split(", "))|length == 2 %}
+                                                        {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0]|int < 365 %}
+                                                            <!-- month -->
+                                                            {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0]|int < 30 %}
+                                                                {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0] }} d ago
+                                                            {% else %}
+                                                                {{ (((((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0])|int)//30 }} mon ago
+                                                            {% endif %}
+                                                            <!-- end -->
+                                                        {% else %}
+                                                            {{ (((((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0])|int)//365 }} yrs ago
+                                                        {% endif %}
+                                                    {% endif %}
+
                                                 </small></span>
                                             </div>
                                             
@@ -523,32 +523,31 @@
                                                     <div class=""><img src="{{ url_for('static',filename='img/'+ comment.blog.author.profile_pic) }}" style="height: 32px; width: 32px; border-radius: 50%;"><i class="fas fa-circle" style="color: turquoise; position: relative; left:-8px; top: 10px; font-size: 8px;"></i></div>
                                                     <p class="card-text" style="margin-left: 3px; margin-top: 3px; font-weight: bold; font-size: 15px;">{{ comment.commentor }}</p>
                                                     <hr/><span class="card-text" style="background: #fff; margin-right: -20px;"><small class="text-muted">
-                                                        {% if (((time_now-comment.timestamp)|string).split(', '))[0] %}
-                                                            {% if ((((time_now-comment.timestamp)|string).split(', '))[0]).split(':')|length > 1 %}
-                                                                {% if ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
-                                                                    {{ (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
-                                                                {% elif ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
-                                                                    {{ (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
-                                                                {% elif ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
-                                                                    {{ (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[2])|int)//1 }}s ago
-                                                                {% elif ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
-                                                                    just now
-                                                                {%endif%}
-                                                            
+                                                        {% if (((time_now-comment.timestamp)|string).split(", "))|length == 1 %}
+                                                        <!-- time -->
+                                                        {% if (((time_now-comment.timestamp)|string).split(", ")[0]).split(':')[0]|int != 0 %}
+                                                            {{ (((time_now-comment.timestamp)|string).split(", ")[0]).split(':')[0]|int }} hr ago
+                                                        {% elif (((time_now-comment.timestamp)|string).split(", ")[0]).split(':')[1]|int != 0 %}
+                                                            {{ (((time_now-comment.timestamp)|string).split(", ")[0]).split(':')[1]|int }} min ago
+                                                        {% elif (((time_now-comment.timestamp)|string).split(", ")[0]).split(':')[2]|int != 0 %}
+                                                            {{ (((time_now-comment.timestamp)|string).split(", ")[0]).split(':')[2]|int }} secs ago
+                                                        {% else %}
+                                                            just now
+                                                        {% endif %}
+                                                        <!-- end -->
+                                                    {% elif (((time_now-comment.timestamp)|string).split(", "))|length == 2 %}
+                                                        {% if (((time_now-comment.timestamp)|string).split(", ")[0]).split(' ')[0]|int < 365 %}
+                                                            <!-- month -->
+                                                            {% if (((time_now-comment.timestamp)|string).split(", ")[0]).split(' ')[0]|int < 30 %}
+                                                                {{ (((time_now-comment.timestamp)|string).split(", ")[0]).split(' ')[0] }} d ago
                                                             {% else %}
-                                                                {% if ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
-                                                                    {{ (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
-                                                                {% elif ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
-                                                                    {% if  (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
-                                                                        (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
-                                                                    {% else %}
-                                                                        (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
-                                                                    {% endif %}
-                                                                {% elif ((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
-                                                                    {{ (((((((time_now-comment.timestamp)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
-                                                                {%endif%}
-                                                            {%endif%}
-                                                        {%endif%} 
+                                                                {{ (((((time_now-comment.timestamp)|string).split(", ")[0]).split(' ')[0])|int)//30 }} mon ago
+                                                            {% endif %}
+                                                            <!-- end -->
+                                                        {% else %}
+                                                            {{ (((((time_now-comment.timestamp)|string).split(", ")[0]).split(' ')[0])|int)//365 }} yrs ago
+                                                        {% endif %}
+                                                    {% endif %}
                                                     </small></span>
                                                 </div>
                                                 <div style="margin-left: 3px; margin-top: 8px;">
@@ -640,32 +639,31 @@
                                                 </div>
                                                 <div class="col-auto">
                                                     <span class="text-xs" style="font-size: 10px;">
-                                                        {% if (((time_now-post.date_posted)|string).split(', '))[0] %}
-                                                    {% if ((((time_now-post.date_posted)|string).split(', '))[0]).split(':')|length > 1 %}
-                                                        {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0]|int) != 0 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[0])|int)//1 }} hr ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1]|int) != 0 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[1])|int)//1 }} min ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) != 0 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2])|int)//1 }} s ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(':'))[2]|int) == 0 %}
+                                                    {% if (((time_now-post.date_posted)|string).split(", "))|length == 1 %}
+                                                        <!-- time -->
+                                                        {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int }} hr ago
+                                                        {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int }} min ago
+                                                        {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[2]|int != 0 %}
+                                                            {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[2]|int }} secs ago
+                                                        {% else %}
                                                             just now
-                                                        {%endif%}
-                                                    
-                                                    {% else %}
-                                                        {% if ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 30 %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//1 }}d ago
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 30 and ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) < 365  %}
-                                                            {% if  (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30 > 1 %}
-                                                                (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                        {% endif %}
+                                                        <!-- end -->
+                                                    {% elif (((time_now-post.date_posted)|string).split(", "))|length == 2 %}
+                                                        {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0]|int < 365 %}
+                                                            <!-- month -->
+                                                            {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0]|int < 30 %}
+                                                                {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0] }} d ago
                                                             {% else %}
-                                                                (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//30m ago
+                                                                {{ (((((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0])|int)//30 }} mon ago
                                                             {% endif %}
-                                                        {% elif ((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0]|int) >= 365  %}
-                                                            {{ (((((((time_now-post.date_posted)|string).split(', '))[0]).split(' '))[0])|int)//365 }}y ago
-                                                        {%endif%}
-                                                    {%endif%}
-                                                {%endif%} 
+                                                            <!-- end -->
+                                                        {% else %}
+                                                            {{ (((((time_now-post.date_posted)|string).split(", ")[0]).split(' ')[0])|int)//365 }} yrs ago
+                                                        {% endif %}
+                                                    {% endif %} 
                                                     </span>
                                                 </div>
                                                 
