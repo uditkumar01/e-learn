@@ -448,7 +448,7 @@
                                         
                                             <span class="card-text"><small class="text-muted">
                                                 {% if (((time_now-post.date_posted)|string).split(", "))|length == 1 %}
-                                                        <!-- time -->
+                                                        <!-- time --> 
                                                         {% if (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int != 0 %}
                                                             {{ (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[0]|int }} hr ago
                                                         {% elif (((time_now-post.date_posted)|string).split(", ")[0]).split(':')[1]|int != 0 %}
