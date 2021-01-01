@@ -1100,7 +1100,7 @@ Website: http://emilcarlsson.se/
 								<form id="upload_pic" method="post" enctype="multipart/form-data">
 									<div class="file-input">
 										
-										<input type="file" id="pic_1" class="file" name="pic_1" accept="image/*">
+										<input type="file" id="pic_1" class="file" name="pic_1">
 										
 										
 										<center><label tabindex="0" for="pic_1" id = "pic_01" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="No Image File Detected. Tap on the button to upload an image.">
@@ -1203,12 +1203,10 @@ Website: http://emilcarlsson.se/
 			document.getElementById('type-message').value = "";
 			// window.location = '#get_at_btm';
 			$('.messages').scrollTop($('.messages')[0].scrollHeight);
-			setTimeout(function(){
-				var f = document.getElementById('pic_01');
-				f.style.backgroundColor = "rgb(216, 216, 216)";
-				document.getElementById('plus').className = "fas fa-paperclip";
-				document.getElementById('plus').style.color = "rgb(90,89,89)";
-			},1000);
+			var f = document.getElementById('pic_01');
+			f.style.backgroundColor = "rgb(216, 216, 216)";
+			document.getElementById('plus').className = "fas fa-paperclip";
+			document.getElementById('plus').style.color = "rgb(90,89,89)";
 		},
 		error: function(data){
 			console.log("error");

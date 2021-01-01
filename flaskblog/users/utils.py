@@ -12,6 +12,7 @@ from datetime import datetime
 from pytz import timezone
 import base64
 import io
+# import mimetypes
 # from pytz import timezone
 # from urlextract import URLExtract
 
@@ -121,22 +122,25 @@ def add_post_pic(pic):
 
 
 def add_message_pic(pic):
-    name = secrets.token_hex(32)
+    string_pic = str(pic)
+    
     NAME,EXT = os.path.splitext(pic.filename)
+    print(NAME,"Z"*20)
+    name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI"+ "IREALNAMESEPI" + NAME+EXT + "irealnamesepi" + secrets.token_hex(32)
     # print(EXT,"sdfffffffffffffffffffffffffffffffffffffffffffffffffffff")
-    if EXT.lower() == ".gif":
-        picture_name = name + EXT
-    else:
-        picture_name = name + '.webp'
+    # if EXT.lower() == ".gif":
+    picture_name = name + EXT
+    # else:
+    #     picture_name = name + '.webp'
     profile_pic_path = os.path.join(current_app.root_path,'static/img', picture_name)
-    if EXT.lower() != ".gif":
-        size = (1280,720)
-        img1 = Image.open(pic)
-        img1.thumbnail(size)
-        img1.save(profile_pic_path)
-        # resize_img(profile_pic_path)
-    else:
-        pic.save(profile_pic_path)
+    # if EXT.lower() != ".gif":
+    #     size = (1280,720)
+    #     img1 = Image.open(pic)
+    #     img1.thumbnail(size)
+    #     img1.save(profile_pic_path)
+    #     # resize_img(profile_pic_path)
+    # else:
+    pic.save(profile_pic_path)
     return picture_name
 
 

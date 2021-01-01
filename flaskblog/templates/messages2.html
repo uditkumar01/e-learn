@@ -9,7 +9,17 @@
                     <!-- <i class="fas fa-caret-right" style="color: #f5f5f5; position: absolute; top:15%; right: -8%; font-size: 15px;"></i> -->
                     {% if message.pic_1 != "NO IMAGE" %}
                         
-                    <span title="{{message.pic_1}}"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% if message.pic_1.split("ItypesepI")[0] == "image" %}
+                            <span title="Image"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "video" %}
+                            
+                            <span title="Video"><video width="100%" controls>
+                                <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                Your browser does not support HTML video.
+                            </video></span>
+                        {% else %}
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></button></span>
+                        {% endif %}
                         
                     {% endif %}
                     {% if message.text != "None" %}
@@ -35,7 +45,17 @@
                     <!-- <i class="fas fa-caret-left" style="color: rgb(59,97,209); position: absolute; top:10%; left: -3%; font-size: 22px;"></i> -->
                     {% if message.pic_1 != "NO IMAGE" %}
                         
-                    <span title="{{message.pic_1}}"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% if message.pic_1.split("ItypesepI")[0] == "image" %}
+                            <span title="Image"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "video" %}
+                            
+                            <span title="Video"><video width="100%" controls>
+                                <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                Your browser does not support HTML video.
+                            </video></span>
+                        {% else %}
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></button></span>
+                        {% endif %}
                         
                     {% endif %}
                     {% if message.text != "None" %}
@@ -57,8 +77,17 @@
                     <!-- <i class="fas fa-caret-right" style="color: #f5f5f5; position: absolute; top:15%; right: -8%; font-size: 15px;"></i> -->
                     {% if message.pic_1 != "NO IMAGE" %}
                         
-                    <span title="{{message.pic_1}}"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
-                        
+                        {% if message.pic_1.split("ItypesepI")[0] == "image" %}
+                            <span title="Image"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "video" %}
+                            
+                            <span title="Video"><video width="100%" controls>
+                                <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                Your browser does not support HTML video.
+                              </video></span>
+                        {% else %}
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></button></span>
+                        {% endif %}
                     {% endif %}
                     {% if message.text != "None" %}
                         {{message.text}}
@@ -82,7 +111,17 @@
                     <!-- <i class="fas fa-caret-left" style="color: rgb(59,97,209); position: absolute; top:10%; left: -3%; font-size: 22px;"></i> -->
                     {% if message.pic_1 != "NO IMAGE" %}
                         
-                    <span title="{{message.pic_1}}"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% if message.pic_1.split("ItypesepI")[0] == "image" %}
+                            <span title="Image"><img src="{{url_for('static',filename='img/'+message.pic_1)}}" alt="" style="width: 100%;height: 100%;border-radius: 5px; margin-bottom: 12px;" /></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "video" %}
+                            
+                            <span title="Video"><video width="100%" controls>
+                                <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                Your browser does not support HTML video.
+                            </video></span>
+                        {% else %}
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></button></span>
+                        {% endif %}
                         
                     {% endif %}
                     {% if message.text != "None" %}
