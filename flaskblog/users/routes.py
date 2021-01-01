@@ -666,19 +666,27 @@ def save_pic(user_id,msg_text):
     # user = User.query.get_or_404(user_id)
     if request.method == "POST":
         
-        message_text = anchorUrl(msg_text)
-        if message_text == "":
-            message_text = "None"
         pic_1 = add_message_pic(request.files['pic_1'])
         now_utc = datetime.now(timezone('UTC'))
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
-        
+        message_text = msg_text
+        if msg_text == "None":
+            string_pic = str(request.files['pic_1'])
+            message_text = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]
+            if message_text == "image":
+                message_text = '📷 image'
+            elif message_text == "audio":
+                message_text = '🎵 audio'
+            else:
+                message_text = '📁 file'
+            
+            
         message1 = Message(user_id = user_id, active_user_id = current_user.id, text = message_text,pic_1 = pic_1, time_am_pm = now_asia.strftime("%I:%M %p"))
         db.session.add(message1)
         db.session.commit()
     
     
-    return "DONE"
+    return "DONE HERE1"
 
 
 

@@ -17,12 +17,20 @@
                                 <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
                                 Your browser does not support HTML video.
                             </video></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "audio" %}
+                            <span style="margin-left: -3px; margin-right: 0;" title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="fas fa-music" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></span></button></span>
+                            <span style="width: 100%; position: relative; left: 1px; border-radius: 3px;">
+                                <audio style="border-radius: 3px;" controls>
+                                    <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                  Your browser does not support the audio element.
+                                </audio>
+                            </span>
                         {% else %}
-                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></button></span>
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="far fa-file-alt" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></span></button></span>
                         {% endif %}
                         
                     {% endif %}
-                    {% if message.text != "None" %}
+                    {% if message.text != "None" and message.text!="🎵 audio" and message.text!="📷 image" and message.text!="📁 file" %}
                         {{message.text}}
                     {% endif %}
                     <span class="text-xs" style="position: absolute; bottom: 0; right: 5px; font-size: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: normal;">
@@ -53,12 +61,20 @@
                                 <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
                                 Your browser does not support HTML video.
                             </video></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "audio" %}
+                            <span style="margin-left: -3px; margin-right: 0;" title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="fas fa-music" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></span></button></span>
+                            <span style="width: 100%; position: relative; left: 1px; border-radius: 3px;">
+                                <audio style="border-radius: 3px;" controls>
+                                    <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                  Your browser does not support the audio element.
+                                </audio>
+                            </span>
                         {% else %}
-                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></button></span>
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="far fa-file-alt" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></span></button></span>
                         {% endif %}
                         
                     {% endif %}
-                    {% if message.text != "None" %}
+                    {% if message.text != "None" and message.text!="🎵 audio" and message.text!="📷 image" and message.text!="📁 file" %}
                         {{message.text}}
                     {% endif %}
                     <span class="text-xs" style="position: absolute; bottom: 0; right: 5px; font-size: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: normal;">{{message.time_am_pm}}
@@ -84,12 +100,22 @@
                             <span title="Video"><video width="100%" controls>
                                 <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
                                 Your browser does not support HTML video.
-                              </video></span>
+                            </video></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "audio" %}
+                        <span style="margin-left: -3px; margin-right: 0;" title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="fas fa-music" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></span></button>
+                                
+                        </span>
+                            <span style="width: 100%; position: relative; left: 1px; border-radius: 3px;">
+                                <audio style="border-radius: 3px;" controls>
+                                    <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                  Your browser does not support the audio element.
+                                </audio>
+                            </span>
                         {% else %}
-                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></button></span>
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(228, 228, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="far fa-file-alt" style="position: relative; color: royalblue; font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double royalblue; margin-left: 20px;" download><i class="fas fa-arrow-down"></i></a></span></button></span>
                         {% endif %}
                     {% endif %}
-                    {% if message.text != "None" %}
+                    {% if message.text != "None" and message.text!="🎵 audio" and message.text!="📷 image" and message.text!="📁 file" %}
                         {{message.text}}
                     {% endif %}
                     <span class="text-xs" style="position: absolute; bottom: 0; right: 5px; font-size: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: normal;">{{message.time_am_pm}}
@@ -119,12 +145,20 @@
                                 <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
                                 Your browser does not support HTML video.
                             </video></span>
+                        {% elif message.pic_1.split("ItypesepI")[0] == "audio" %}
+                            <span style="margin-left: -3px; margin-right: 0;" title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="fas fa-music" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></span></button></span>
+                            <span style="width: 100%; position: relative; left: 1px; border-radius: 3px;">
+                                <audio style="border-radius: 3px;" controls>
+                                    <source src="{{url_for('static',filename='img/'+message.pic_1)}}">
+                                  Your browser does not support the audio element.
+                                </audio>
+                            </span>
                         {% else %}
-                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><i class="far fa-file-alt" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[0][:([(message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1])|length,10])|min] }}.{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split('.')[1] }} <a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></button></span>
+                            <span title="{{message.pic_1.split('irealnamesepi')[0].split('IREALNAMESEPI')[-1]}}"><button style="position: relative; margin: 5px; background: rgb(43, 80, 190); color: rgb(198, 205, 228); border-width: 0; padding: 10px; border-radius: 3px; width: 100%;"><span style="float: left;"><i class="far fa-file-alt" style="position: relative; color: rgb(198, 205, 228); font-size: 20px; margin-right: 8px; bottom: -2px;"></i>{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[0][:10] }}{{ message.pic_1.split("irealnamesepi")[0].split("IREALNAMESEPI")[-1].split("INAMEEXTSEPI")[1] }}</span> <span style="float: right;"><a href="{{url_for('static',filename='img/'+message.pic_1)}}" style="padding: 5px; padding-left: 8px; padding-right: 8px; font-size: 12px; border-radius: 50%; border: 1.5px double #fff; margin-left: 20px;" download><i class="fas fa-arrow-down" style="color: rgb(198, 205, 228);"></i></a></span></button></span>
                         {% endif %}
                         
                     {% endif %}
-                    {% if message.text != "None" %}
+                    {% if message.text != "None" and message.text!="🎵 audio" and message.text!="📷 image" and message.text!="📁 file" %}
                         {{message.text}}
                     {% endif %}
                     <span class="text-xs" style="position: absolute; bottom: 0; right: 5px; font-size: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: normal;">{{message.time_am_pm}}
