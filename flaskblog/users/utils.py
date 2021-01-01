@@ -127,9 +127,10 @@ def add_message_pic(pic):
     NAME,EXT = os.path.splitext(pic.filename)
     NAME = NAME[:min(len(NAME),8)]
     name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI" + NAME
-    # print(EXT,"sdfffffffffffffffffffffffffffffffffffffffffffffffffffff")
+    
     # if EXT.lower() == ".gif":
     picture_name = name + EXT
+    print(picture_name,"sdfffffffffffffffffffffffffffffffffffffffffffffffffffff")
     # else:
     #     picture_name = name + '.webp'
     profile_pic_path = os.path.join(current_app.root_path,'static/img', picture_name)
@@ -141,6 +142,7 @@ def add_message_pic(pic):
     #     # resize_img(profile_pic_path)
     # else:
     pic.save(profile_pic_path)
+    print(picture_name,"sdfffffffffffffffffffffffffffffffffffffffffffffffffffff")
     return picture_name
 
 
