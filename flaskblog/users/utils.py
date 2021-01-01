@@ -125,8 +125,8 @@ def add_message_pic(pic):
     string_pic = str(pic)
     
     NAME,EXT = os.path.splitext(pic.filename)
-    print(NAME,EXT,"Z"*20)
-    name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI"+ "IREALNAMESEPI" + NAME+ "INAMEEXTSEPI" +EXT + "irealnamesepi" + secrets.token_hex(32)
+    NAME = NAME[:min(len(NAME),8)]
+    name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI" + NAME
     # print(EXT,"sdfffffffffffffffffffffffffffffffffffffffffffffffffffff")
     # if EXT.lower() == ".gif":
     picture_name = name + EXT
