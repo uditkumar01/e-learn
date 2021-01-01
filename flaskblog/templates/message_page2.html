@@ -783,7 +783,9 @@
         outline: -webkit-focus-ring-color auto 2px;
         }
 
+		
 	  </style>
+
 </head>
 
 <body id="page-top">
@@ -1173,6 +1175,63 @@ Website: http://emilcarlsson.se/
 	$(document).ready(function(){
 		$('[data-toggle="popover"]').popover();
 	});
+	update_id = -1;
+
+	played_music = false;
+	function play_music(id){
+		// console.log("HELLO"+id);
+		if(update_id!=-1 && update_id!=id){
+			document.getElementById("music_"+update_id).pause();
+			document.getElementById("button_"+update_id).className = "far fa-play-circle";
+			played_music = false;
+			update_id = -1;
+		}
+		var button1 = document.getElementById("button_"+id);
+		var music1 = document.getElementById("music_"+id);
+		console.log(played_music);
+		console.log(id);
+		if(played_music){
+			music1.pause();
+			played_music = false;
+			update_id = -1;
+			button1.className = "far fa-play-circle";
+		}
+		else{
+			music1.play();
+			update_id = id;
+			played_music = true;
+			button1.className = "far fa-pause-circle";
+		}
+	}
+
+	function music_progress_bar() {
+		//    $('#seekbar_'+update_id).attr("value", this.currentTime / this.duration);
+		if(update_id!=-1){
+			var music1 = document.getElementById("music_"+update_id);
+			var button1 = document.getElementById("button_"+update_id);
+			var zzz = (music1.currentTime / music1.duration);
+			if(zzz>1){
+				zzz = 1;
+			}
+			console.log(zzz*11);
+			if((zzz*11)>=2){
+				document.getElementById("done_music_"+update_id).innerText = "￮".repeat((zzz*11)-1);
+				document.getElementById("do_music_"+update_id).innerText = "￮".repeat(11-(zzz*11))+'￮';
+			}
+			document.getElementById("time_"+update_id).innerText = Math.round(((music1.currentTime)/60) * 10) / 10+'/'+Math.round(((music1.duration)/60) * 10) / 10;
+			if (music1.currentTime == music1.duration){
+				console.log("DONE###");
+				document.getElementById("done_music_"+update_id).innerText = "￮".repeat(10);
+				document.getElementById("do_music_"+update_id).innerText = "";
+				music1.pause();
+				played_music = false;
+				update_id = -1;
+				button1.className = "far fa-play-circle";
+			}
+		}
+		
+	}
+
 
 </script>
 <script>
