@@ -1235,12 +1235,26 @@ Website: http://emilcarlsson.se/
 
 </script>
 <script>
+	function getFileType(file) {
+
+		if(file.type.match('image.*'))
+		return 'image';
+
+		if(file.type.match('video.*'))
+		return 'video';
+
+		if(file.type.match('audio.*'))
+		return 'audio';
+
+		return 'file';
+	}
 
 	$(document).ready(function (e) {
 	$('#upload_pic').on('submit',(function(e) {
 		e.preventDefault();
 		var formData = new FormData(this);
 		
+		console.log(getFileType(document.getElementById("pic_1").files[0]));
 		var typed_text = document.getElementById('type-message').value
 		if(typed_text == ""){
 			typed_text = "None";
@@ -1248,7 +1262,7 @@ Website: http://emilcarlsson.se/
 
 	$.ajax({
 		type:'POST',
-		url: "/send_pic/"+global_user_id+"/"+typed_text,
+		url: "/send_pic/"+global_user_id+"/"+typed_text+"/"+getFileType(document.getElementById("pic_1").files[0]),
 		data:formData,
 		cache:false,
 		contentType: false,
