@@ -121,12 +121,13 @@ def add_post_pic(pic):
     return picture_name
 
 
-def add_message_pic(pic):
+def add_message_pic(pic,file_type):
     string_pic = str(pic)
     
     NAME,EXT = os.path.splitext(pic.filename)
     NAME = NAME[:min(len(NAME),8)]
-    name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI" + NAME
+    # name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI" + NAME
+    name = file_type + "ItypesepI" + NAME
     
     # if EXT.lower() == ".gif":
     picture_name = name + EXT
