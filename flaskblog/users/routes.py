@@ -660,22 +660,20 @@ def chat_room(user_id,id1):
     return render_template('message_page2.html', all_users = all_users, user = user, time_now = datetime.utcnow(), received_msg_len = received_msg_len, seen_message_len = all_seen_messages_len, all_notify = all_notify, all_notify_len = all_notify_len, alerts = alerts)
 
 @login_required
-@users.route("/send_pic/<int:user_id>/<string:msg_text>" , methods = ['GET','POST'])
-def save_pic(user_id,msg_text):
+@users.route("/send_pic/<int:user_id>/<string:msg_text>/<string:file_type>" , methods = ['GET','POST'])
+def save_pic(user_id,msg_text,file_type):
     
     # user = User.query.get_or_404(user_id)
     if request.method == "POST":
         
-        pic_1 = add_message_pic(request.files['pic_1'])
+        pic_1 = add_message_pic(request.files['pic_1'],file_type)
         now_utc = datetime.now(timezone('UTC'))
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
         message_text = msg_text
         if msg_text == "None":
-            string_pic = str(request.files['pic_1'])
-            message_text = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]
-            if message_text == "image":
+            if file_type == "image":
                 message_text = '📷 image'
-            elif message_text == "audio":
+            elif file_type == "audio":
                 message_text = '🎵 audio'
             else:
                 message_text = '📁 file'
