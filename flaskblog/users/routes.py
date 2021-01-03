@@ -666,6 +666,7 @@ def save_pic(user_id,msg_text,file_type):
     # user = User.query.get_or_404(user_id)
     if request.method == "POST":
         
+        print(request.files['pic_1'],file_type,"check here #1")
         pic_1 = add_message_pic(request.files['pic_1'],file_type)
         now_utc = datetime.now(timezone('UTC'))
         now_asia = now_utc.astimezone(timezone('Asia/Kolkata'))
