@@ -124,9 +124,9 @@ def add_post_pic(pic):
 def add_message_pic(pic,file_type):
     print(pic,file_type,"check here #2")
     NAME,EXT = os.path.splitext(pic.filename)
-    NAME = NAME[:min(len(NAME),4)]
+    NAME = NAME[:min(len(NAME),3)]
     # name = string_pic[string_pic.find("('")+2:string_pic.find("')")].split('/')[0]+ "ItypesepI" + NAME
-    name = file_type + "ItypesepI" + NAME + secrets.token_hex(3)
+    name = file_type + "ItypesepI" + NAME + secrets.token_hex(2)
     
     # if EXT.lower() == ".gif":
     picture_name = name + EXT
